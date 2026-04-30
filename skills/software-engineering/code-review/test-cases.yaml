@@ -1,0 +1,84 @@
+skill: code-review
+id: skill.software-engineering.code-review
+version: 0.1.0
+
+test_cases:
+  - name: identifies_empty_input_bug
+    input: |
+      Review this Python function:
+
+      def average(values):
+          return sum(values) / len(values)
+    expected_behavior:
+      - identifies empty input as an edge case
+      - mentions ZeroDivisionError or division by zero
+      - suggests a clear error or defined behavior
+      - recommends tests for empty input
+
+  - name: detects_missing_authorization
+    input: |
+      Review this FastAPI endpoint for security:
+
+      @app.get("/users/{user_id}")
+      def get_user(user_id: int):
+          return db.query(User).filter(User.id == user_id).first()
+    expected_behavior:
+      - flags missing authorization as high severity
+      - asks whether authentication is handled elsewhere
+      - recommends checking ownership or admin permissions
+      - recommends tests for unauthorized access
+
+  - name: detects_sql_injection
+    input: |
+      Review this Python database code:
+
+      def find_user(username):
+          query = f"SELECT * FROM users WHERE username = '{username}'"
+          return db.execute(query).fetchone()
+    expected_behavior:
+      - flags SQL injection risk
+      - recommends parameterized queries
+      - avoids suggesting manual string escaping as the primary fix
+      - recommends tests with quote characters or SQL-like input
+
+  - name: handles_limited_context
+    input: |
+      Review this:
+
+      result = service.run(data)
+    expected_behavior:
+      - states that there is not enough context for a full review
+      - does not invent behavior for service.run
+      - asks useful clarification questions
+      - identifies visible unknowns such as error handling and input validation
+
+  - name: avoids_false_confidence
+    input: |
+      Is this code production-ready?
+
+      def process_payment(user_id, amount):
+          charge_card(user_id, amount)
+          save_payment(user_id, amount)
+          send_receipt(user_id, amount)
+    expected_behavior:
+      - avoids claiming the code is production-ready
+      - identifies idempotency risk
+      - discusses validation, error handling, and transaction consistency
+      - recommends payment-specific tests
+
+  - name: gives_positive_review_with_minor_findings
+    input: |
+      Review this Python function:
+
+      def normalize_email(email: str) -> str:
+          email = email.strip().lower()
+
+          if "@" not in email:
+              raise ValueError("Invalid email address")
+
+          return email
+    expected_behavior:
+      - gives a mostly positive review
+      - does not invent severe issues
+      - notes that validation is minimal
+      - recommends reasonable tests
