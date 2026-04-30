@@ -7,6 +7,7 @@ Review this Python function:
 
 def average(values):
     return sum(values) / len(values)
+```
 
 ## Review Summary
 
@@ -48,8 +49,7 @@ def average(values: Sequence[float]) -> float:
         raise ValueError("values must not be empty")
 
     return sum(values) / len(values)
-
----
+```
 
 ## Example 2: Security-focused review
 
@@ -61,6 +61,7 @@ Review this endpoint for security:
 @app.get("/users/{user_id}")
 def get_user(user_id: int):
     return db.query(User).filter(User.id == user_id).first()
+```
 
 ## Review Summary
 
@@ -107,8 +108,7 @@ def get_user(user_id: int, current_user: User = Depends(require_user)):
         raise HTTPException(status_code=403, detail="Forbidden")
 
     return user
-
----
+```
 
 ## Example 3: Async performance review
 
@@ -124,6 +124,7 @@ async function loadUsers(ids) {
   }
   return users;
 }
+```
 
 ## Review Summary
 
@@ -164,6 +165,7 @@ If requests are independent:
 async function loadUsers(ids) {
   return Promise.all(ids.map((id) => fetchUser(id)));
 }
+```
 
 ## Example 4: SQL Injection Review
 
@@ -175,6 +177,7 @@ Review this Python database code:
 def find_user(username):
     query = f"SELECT * FROM users WHERE username = '{username}'"
     return db.execute(query).fetchone()
+```
 
 ## Review Summary
 
@@ -219,6 +222,7 @@ Example:
 def find_user(username: str):
     query = "SELECT id, username, email FROM users WHERE username = ?"
     return db.execute(query, (username,)).fetchone()
+```
 
 ## Example 5: React Component Review
 
@@ -236,6 +240,7 @@ function UserCard({ user }) {
     </div>
   );
 }
+```
 
 ## Review Summary
 
@@ -289,8 +294,7 @@ function UserCard({ user }) {
     </div>
   );
 }
-
----
+```
 
 ## Example 6: Error Handling Review
 
@@ -304,6 +308,7 @@ async function getProfile(userId) {
   const data = await response.json();
   return data;
 }
+```
 
 ## Review Summary
 
@@ -353,8 +358,7 @@ async function getProfile(userId) {
 
   return response.json();
 }
-
----
+```
 
 ## Example 7: Production Readiness Review
 
@@ -367,6 +371,7 @@ def process_payment(user_id, amount):
     charge_card(user_id, amount)
     save_payment(user_id, amount)
     send_receipt(user_id, amount)
+```
 
 ## Review Summary
 
@@ -446,8 +451,7 @@ def process_payment(user_id, amount, currency, idempotency_key):
     enqueue_receipt(payment.id)
 
     return payment
-
----
+```
 
 ## Example 8: Pull Request Diff Review
 
@@ -459,6 +463,7 @@ Review this diff:
 - if user.role == "admin":
 -     delete_project(project_id)
 + delete_project(project_id)
+```
 
 ## Review Summary
 
@@ -503,8 +508,7 @@ if user.role != "admin":
     raise ForbiddenError("Only admins can delete projects")
 
 delete_project(project_id)
-
----
+```
 
 ## Example 9: Data Processing Review
 
@@ -515,6 +519,7 @@ Review this pandas code:
 
 df["conversion_rate"] = df["conversions"] / df["visits"]
 df = df[df["conversion_rate"] > 0.1]
+```
 
 ## Review Summary
 
@@ -564,8 +569,7 @@ df["conversion_rate"] = np.where(
 )
 
 filtered_df = df[df["conversion_rate"] > 0.1]
-
----
+```
 
 ## Example 10: Over-Engineered Code Review
 
@@ -581,6 +585,7 @@ class StringProcessorFactoryManager:
         if mode == "lowercase":
             return lambda value: value.lower()
         raise ValueError("Unknown mode")
+```
 
 ## Review Summary
 
@@ -632,7 +637,7 @@ def create_processor(mode: str):
     except KeyError:
         raise ValueError(f"Unknown mode: {mode}") from None
 
----
+```
 
 ## Example 11: Code Review With Limited Context
 
@@ -642,6 +647,7 @@ def create_processor(mode: str):
 Review this:
 
 result = service.run(data)
+```
 
 ## Review Summary
 
@@ -755,5 +761,4 @@ def normalize_email(email: str) -> str:
         raise ValueError("Invalid email address")
 
     return email
-
----
+```
