@@ -3,10 +3,10 @@
 ## Metadata
 
 - ID: `skill.software-engineering.code-review`
-- Version: `0.1.0`
+- Version: `0.1.1`
 - Status: `draft`
-- Owner: `<your-name>`
-- Last updated: `<YYYY-MM-DD>`
+- Owner: `Wolfgang Fuerst`
+- Last updated: `2026-05-02`
 
 ## Purpose
 
