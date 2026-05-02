@@ -28,6 +28,9 @@ Search and retrieve investment research reports using a natural language query a
 3. Apply filters for sector, region, date range, and report type.
 4. Rank results by relevance and recency.
 5. Return the top matching reports with metadata and summaries.
+6. Links always point to the original source with a unique URL.
+7. Check for access limitations and note if full report content is unavailable.
+8. If no reports are found, return an empty list and a message indicating no matches.
 
 ## Example
 Input:
