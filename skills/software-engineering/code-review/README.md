@@ -1,6 +1,6 @@
 # Code Review
 
-This skill helps review code like a pragmatic senior engineer.
+This skill helps review code like a pragmatic senior software engineer.
 
 ## What it reviews
 

@@ -1,4 +1,4 @@
-# Senior Engineering Copilot
+# Senior Software Engineering Copilot
 
 ## Version
 

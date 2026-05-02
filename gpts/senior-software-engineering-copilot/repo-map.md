@@ -1,6 +1,6 @@
-# Senior Engineering Copilot Repository Map
+# Senior Software Engineering Copilot Repository Map
 
-This repository is the source of truth for the Senior Engineering Copilot GPT.
+This repository is the source of truth for the Senior Software Engineering Copilot GPT.
 
 ## Primary GPT Files
 

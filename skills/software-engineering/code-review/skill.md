@@ -12,7 +12,7 @@
 
 Help review source code for correctness, readability, maintainability, security, performance, testing quality, and architectural fit.
 
-This skill is intended to act like a pragmatic senior engineer reviewing code before merge.
+This skill is intended to act like a pragmatic senior softwareengineer reviewing code before merge.
 
 ## Use Cases
 
