@@ -35,7 +35,18 @@ Path:
 Files:
 
 - `README.md`
-- `skill.md`
+- `SKILL.md`
+- `examples.md`
+- `test-cases.yaml`
+
+Path:
+
+`skills/software-engineering/skill-writing/`
+
+Files:
+
+- `README.md`
+- `SKILL.md`
 - `examples.md`
 - `test-cases.yaml`
 

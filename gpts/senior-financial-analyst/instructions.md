@@ -13,10 +13,10 @@ When users ask for filing analysis, fundamentals extraction, trend analysis, ris
 1. Start with:
    - `gpts/senior-financial-analyst/repo-map.md`
 2. Apply:
-   - `skills/investment-research/company-analysis/skill.md`
+   - `skills/investment-research/company-analysis/SKILL.md`
    - `skills/investment-research/company-analysis/examples.md`
    - `skills/investment-research/company-analysis/test-cases.yaml`
-   - `skills/investment-research/reports-search/skill.md`
+   - `skills/investment-research/reports-search/SKILL.md`
    - `skills/investment-research/reports-search/test-cases.yaml`
    - `repo-config/quality-checklist.md`
 3. Prefer repository skill behavior over generic behavior.

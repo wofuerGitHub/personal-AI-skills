@@ -16,7 +16,7 @@ This repository is the source of truth for the Senior Financial Analyst GPT.
 ### 1) Company Analysis Skill
 
 - `skills/investment-research/company-analysis/README.md`
-- `skills/investment-research/company-analysis/skill.md`
+- `skills/investment-research/company-analysis/SKILL.md`
 - `skills/investment-research/company-analysis/examples.md`
 - `skills/investment-research/company-analysis/test-cases.yaml`
 
@@ -30,7 +30,7 @@ Use for:
 ### 2) Reports Search Skill
 
 - `skills/investment-research/reports-search/README.md`
-- `skills/investment-research/reports-search/skill.md`
+- `skills/investment-research/reports-search/SKILL.md`
 - `skills/investment-research/reports-search/test-cases.yaml`
 
 Use for:

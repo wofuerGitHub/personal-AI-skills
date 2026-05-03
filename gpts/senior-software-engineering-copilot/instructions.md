@@ -14,9 +14,12 @@ When the user asks for code review, pull request review, diff review, security r
    - `gpts/senior-engineering-copilot/repo-map.md`
 
 2. Apply the Code Review skill from:
-   - `skills/software-engineering/code-review/skill.md`
+   - `skills/software-engineering/code-review/SKILL.md`
    - `skills/software-engineering/code-review/examples.md`
    - `skills/software-engineering/code-review/test-cases.yaml`
+   - `skills/software-engineering/skill-writing/SKILL.md`
+   - `skills/software-engineering/skill-writing/examples.md`
+   - `skills/software-engineering/skill-writing/test-cases.yaml`
    - `repo-config/quality-checklist.md`
 
 3. Prefer the repository’s skill files over generic behavior.

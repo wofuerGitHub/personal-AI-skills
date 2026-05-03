@@ -35,7 +35,7 @@ Path:
 Files:
 
 - `README.md`
-- `skill.md`
+- `SKILL.md`
 - `examples.md`
 - `test-cases.yaml`
 
@@ -48,7 +48,7 @@ Path:
 Files:
 
 - `README.md`
-- `skill.md`
+- `SKILL.md`
 - `test-cases.yaml`
 
 ## Recommended GPT Capabilities

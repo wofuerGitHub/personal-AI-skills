@@ -20,7 +20,7 @@ This repository is the source of truth for the Senior Software Engineering Copil
 Skill path:
 
 - `skills/software-engineering/code-review/README.md`
-- `skills/software-engineering/code-review/skill.md`
+- `skills/software-engineering/code-review/SKILL.md`
 - `skills/software-engineering/code-review/examples.md`
 - `skills/software-engineering/code-review/test-cases.yaml`
 
