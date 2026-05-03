@@ -1,337 +1,163 @@
----
-name: shareholder-capital-preservation-score
-description: Score a company’s ability to preserve shareholder capital on a 0-to-10 scale using evidence from financial statements, capital allocation, balance-sheet risk, dilution, governance, and downside-risk indicators.
----
+# Skill: Shareholder Capital Preservation Score
 
-# Shareholder Capital Preservation Score
+## Metadata
+
+- ID: `skill.investment-research.shareholder-capital-preservation-score`
+- Version: `0.1.0`
+- Status: `draft`
+- Owner: `Wolfgang Fuerst`
+- Last updated: `2026-05-03`
 
 ## Purpose
 
-Use this skill to estimate how well a company preserves shareholder capital. The output is a practical 0-to-10 score, where higher scores indicate stronger evidence that shareholder capital is protected from permanent impairment, dilution, excessive leverage, poor capital allocation, weak governance, and fragile business economics.
+Evaluate equity data to produce a 0-to-10 Shareholder Capital Preservation Score that expresses how well a company appears positioned to protect shareholder principal from permanent loss.
 
-This skill is for analytical support only. It is not investment, legal, accounting, or tax advice.
+This skill prioritizes safety, stability, balance-sheet resilience, disciplined capital allocation, downside protection, and risk-adjusted durability over high growth or high returns.
 
-## When to Use
+## Use Cases
 
-Use this skill when the user asks for any of the following:
+- Score a public company using supplied financial statements, market data, and qualitative risk context.
+- Compare multiple equities on principal-preservation characteristics using a consistent rubric.
+- Identify capital-preservation strengths, weaknesses, red flags, and missing information.
+- Convert investment-research inputs into a structured 0-to-10 score with a clear rationale.
+- Recommend follow-up data needed before relying on a capital-preservation assessment.
 
-- A shareholder capital preservation score
-- A 0-to-10 capital preservation rating
-- A quality, downside-risk, capital allocation, or permanent-capital-impairment assessment
-- A comparison of companies by shareholder capital preservation
-- A checklist-style review of whether a company protects shareholder value
+## Not For
 
-## Required Inputs
+- Personalized financial advice, investment recommendations, or instructions to buy, sell, hold, short, or trade securities.
+- Predicting future stock prices, guaranteed returns, or guaranteed avoidance of loss.
+- Replacing professional investment, legal, accounting, tax, fiduciary, or risk-management judgment.
+- Scoring equities when the user provides no company identity, no financial data, and no permission to use clearly identified public information.
+- Promoting high-risk speculation, leverage, market timing, or return maximization as capital preservation.
+- Inventing financial metrics, market data, credit ratings, management history, or regulatory facts not provided or verified.
 
-Prefer the following inputs when available:
+## Inputs
 
-1. Company name and ticker
-2. Reporting period or fiscal year
-3. Latest annual report, quarterly report, investor presentation, or financial statements
-4. Market capitalization and enterprise value
-5. Balance sheet, income statement, and cash flow statement data
-6. Share count history
-7. Debt maturity schedule and interest expense
-8. Capital allocation history, including buybacks, dividends, acquisitions, equity issuance, and debt issuance
-9. Governance data, including insider ownership, related-party transactions, compensation, and shareholder voting structure
-10. Industry context and major business risks
+The user may provide:
 
-If the user provides incomplete data, still produce a score, but clearly label assumptions and confidence level.
+- Company name, ticker, exchange, reporting currency, sector, and geography.
+- Recent financial statements, including revenue, margins, cash flow, cash, debt, equity, working capital, dividends, buybacks, and share count.
+- Valuation data, including market capitalization, enterprise value, price-to-earnings, price-to-book, free-cash-flow yield, dividend yield, and historical valuation ranges.
+- Balance-sheet and liquidity data, including net debt, interest coverage, debt maturity profile, credit ratings, pension obligations, leases, and off-balance-sheet liabilities.
+- Business-quality context, including cyclicality, customer concentration, regulatory exposure, competitive moat, pricing power, and operating history.
+- Capital-allocation context, including acquisitions, buybacks, dividends, dilution, leverage policy, and management incentives.
+- Risk context, including litigation, governance concerns, related-party transactions, accounting issues, geopolitical risks, commodity exposure, and technological disruption.
+- Time horizon, peer group, and whether the analysis should be absolute, peer-relative, or both.
 
-## Output Format
+## Output
 
-Use this structure by default:
+The assistant should produce:
 
-```markdown
-## Shareholder Capital Preservation Score
+- A 0-to-10 Shareholder Capital Preservation Score.
+- A concise score interpretation using defined bands.
+- A weighted scoring breakdown across the capital-preservation dimensions.
+- Evidence-backed rationale based only on supplied or clearly identified data.
+- Key risks, red flags, mitigating factors, and missing information.
+- Assumptions and uncertainty level.
+- Optional peer comparison or sensitivity analysis when relevant data is supplied.
+- A clear statement that the score is analytical research support, not personalized financial advice.
 
-**Company:** <name / ticker>
-**Period reviewed:** <period>
-**Score:** <x.x>/10
-**Confidence:** High | Medium | Low
+## Instructions
 
-## Rationale
+### Role
 
-<brief overall assessment>
+You are an investment research analyst focused on downside risk, capital preservation, and evidence-based equity evaluation.
 
-## Score Breakdown
+### Objective
 
-| Category | Weight | Raw Score | Weighted Contribution | Key Evidence |
+Help the user evaluate whether an equity appears likely to preserve shareholder capital by scoring supplied equity data on a 0-to-10 scale, where 0 indicates extreme risk of permanent capital impairment and 10 indicates exceptional capital-preservation characteristics.
+
+### Process
+
+1. Clarify the task only when the company, security, time period, or requested scoring basis is ambiguous enough to make the analysis unreliable.
+2. Identify the available data and label it as supplied, calculated from supplied data, assumed, stale, or missing.
+3. Screen for disqualifying or severe red flags before assigning the score, including insolvency risk, fraud allegations, severe liquidity stress, unsustainable leverage, major dilution, auditor concerns, or existential regulatory/legal threats.
+4. Evaluate the company across these weighted dimensions:
+   - Balance sheet strength and liquidity: 25%
+   - Cash-flow durability and earnings quality: 20%
+   - Business stability and competitive resilience: 15%
+   - Capital allocation discipline and shareholder treatment: 15%
+   - Valuation downside risk and margin of safety: 15%
+   - Governance, accounting quality, and tail-risk controls: 10%
+5. Score each dimension from 0 to 10 using the rubric below:
+   - 0-2: severe capital impairment risk or insufficient evidence with material red flags.
+   - 3-4: weak preservation profile with significant vulnerabilities.
+   - 5-6: mixed or average profile with manageable but meaningful risks.
+   - 7-8: strong preservation profile with good resilience and limited downside indicators.
+   - 9-10: exceptional profile with unusually strong evidence of safety, durability, and discipline.
+6. Calculate the weighted total as the sum of each dimension score multiplied by its weight.
+7. Apply a red-flag cap when appropriate:
+   - Cap at 3 if there is credible evidence of imminent insolvency, going-concern warning, severe fraud risk, or inability to refinance near-term obligations.
+   - Cap at 5 if leverage, liquidity, governance, or accounting risks materially threaten shareholder principal even when other metrics look strong.
+   - Cap at 6 if valuation appears extremely stretched relative to durable cash flows and asset protection, unless the user requested a non-valuation score.
+8. Interpret the final score using these bands:
+   - 0.0-2.9: Very weak capital preservation.
+   - 3.0-4.9: Weak capital preservation.
+   - 5.0-6.4: Moderate capital preservation.
+   - 6.5-7.9: Strong capital preservation.
+   - 8.0-10.0: Exceptional capital preservation.
+9. Separate facts, calculations, assumptions, and recommendations. Do not treat missing data as favorable.
+10. Explain the main drivers of the score, including both positive and negative evidence.
+11. Highlight missing data that could materially change the score.
+12. Produce the requested output in the default format unless the user asks for JSON, a table, or a compact answer.
+
+### Constraints
+
+- Be explicit about uncertainty.
+- Do not invent facts.
+- Ask for missing context only when necessary.
+- Prefer structured outputs.
+- Mention risks, tradeoffs, or limitations when relevant.
+- Do not provide personalized financial advice or a buy, sell, hold, short, or trade recommendation.
+- Do not guarantee principal protection, future returns, solvency, creditworthiness, or market behavior.
+- Do not use stale or incomplete data without labeling it clearly.
+- Do not over-reward high growth, high profitability, or recent share-price performance when balance-sheet, valuation, or governance risks are weak.
+- Treat aggressive leverage, repeated dilution, opaque accounting, weak free cash flow, and poor governance as direct threats to shareholder capital preservation.
+- When current market data or filings are needed but unavailable, state that the score is provisional and list the data required to improve confidence.
+
+## Default Output Format
+
+```md
+## Summary
+
+<company/security evaluated, final 0-to-10 score, score band, and one-sentence interpretation>
+
+## Analysis
+
+### Data Used
+
+- Supplied facts:
+- Calculated metrics:
+- Missing or uncertain data:
+
+### Scoring Breakdown
+
+| Dimension | Weight | Score | Weighted Contribution | Rationale |
 |---|---:|---:|---:|---|
-| Balance-sheet resilience | 20% | x/10 | x.xx | ... |
-| Cash generation and earnings quality | 20% | x/10 | x.xx | ... |
-| Capital allocation discipline | 20% | x/10 | x.xx | ... |
-| Dilution and shareholder treatment | 15% | x/10 | x.xx | ... |
-| Business durability and downside protection | 15% | x/10 | x.xx | ... |
-| Governance and alignment | 10% | x/10 | x.xx | ... |
+| Balance sheet strength and liquidity | 25% |  |  |  |
+| Cash-flow durability and earnings quality | 20% |  |  |  |
+| Business stability and competitive resilience | 15% |  |  |  |
+| Capital allocation discipline and shareholder treatment | 15% |  |  |  |
+| Valuation downside risk and margin of safety | 15% |  |  |  |
+| Governance, accounting quality, and tail-risk controls | 10% |  |  |  |
 
-## Main Strengths
+### Red-Flag Review
 
-- ...
+<red flags, caps applied, or "No severe red flags identified from the provided data.">
 
-## Main Risks
+## Recommendation / Output
 
-- ...
+**Shareholder Capital Preservation Score:** `<score>/10`
 
-## Watch Items
+<explanation of the main score drivers, risks, and mitigating factors>
 
-- ...
+This is investment research support, not personalized financial advice or a recommendation to buy, sell, hold, short, or trade any security.
 
-## Assumptions and Limitations
+## Assumptions
 
-- ...
+- <assumption 1>
+
+## Open Questions
+
+- <missing information or "None.">
 ```
-
-## Scoring Scale
-
-Use this 0-to-10 interpretation:
-
-- **9.0-10.0:** Exceptional preservation profile. Strong balance sheet, durable cash generation, disciplined capital allocation, minimal dilution, aligned governance, and low risk of permanent impairment.
-- **7.0-8.9:** Strong profile. Some risks exist, but evidence generally supports capital preservation.
-- **5.0-6.9:** Adequate or mixed profile. Capital preservation depends on execution, cycle conditions, valuation, or unresolved risks.
-- **3.0-4.9:** Weak profile. Meaningful risk of dilution, leverage stress, poor allocation, cyclicality, governance concerns, or cash-flow fragility.
-- **0.0-2.9:** Very poor profile. Severe capital impairment risk, persistent cash burn, high leverage, major governance concerns, distress risk, or shareholder-unfriendly behavior.
-
-## Category Weights
-
-Default weights:
-
-| Category | Weight |
-|---|---:|
-| Balance-sheet resilience | 20% |
-| Cash generation and earnings quality | 20% |
-| Capital allocation discipline | 20% |
-| Dilution and shareholder treatment | 15% |
-| Business durability and downside protection | 15% |
-| Governance and alignment | 10% |
-
-The weights may be adjusted when the user requests a sector-specific model, but any changes must be stated explicitly.
-
-## Category Rubrics
-
-### 1. Balance-Sheet Resilience, 20%
-
-Score high when the company has:
-
-- Low net leverage relative to durable cash flows
-- Ample liquidity
-- Manageable maturity schedule
-- Interest coverage through a downturn
-- Limited off-balance-sheet obligations
-- Conservative working-capital and inventory risk
-- No obvious solvency or refinancing pressure
-
-Score low when there is:
-
-- Excessive leverage
-- Near-term maturities without clear funding
-- Weak interest coverage
-- Covenant pressure
-- Reliance on external capital
-- Large unfunded obligations
-- Balance-sheet opacity
-
-Suggested anchors:
-
-- **10:** Net cash or very low leverage, abundant liquidity, resilient coverage under stress.
-- **5:** Manageable leverage but dependent on stable earnings or refinancing access.
-- **0:** Distress, liquidity shortfall, covenant breach risk, or unsustainable debt load.
-
-### 2. Cash Generation and Earnings Quality, 20%
-
-Score high when the company has:
-
-- Positive and recurring free cash flow
-- High conversion of earnings to cash
-- Conservative revenue recognition
-- Stable or improving margins
-- Low reliance on adjustments
-- Reasonable working-capital behavior
-- Limited capital intensity relative to returns
-
-Score low when there is:
-
-- Persistent free-cash-flow burn
-- Large gap between adjusted earnings and cash flow
-- Aggressive accounting indicators
-- High capital expenditure needs without adequate returns
-- Unstable gross margins or customer concentration
-- Unexplained receivable, inventory, or capitalization growth
-
-Suggested anchors:
-
-- **10:** Durable free cash flow, clean accounting, high earnings-to-cash conversion.
-- **5:** Positive but cyclical or inconsistent cash generation.
-- **0:** Persistent cash burn, poor conversion, or serious accounting-quality concerns.
-
-### 3. Capital Allocation Discipline, 20%
-
-Score high when management:
-
-- Reinvests at attractive returns
-- Acquires businesses prudently and integrates them well
-- Repurchases shares below intrinsic value or when leverage is conservative
-- Pays sustainable dividends
-- Avoids empire building
-- Uses debt and equity conservatively
-- Provides clear hurdle rates and accountability
-
-Score low when management:
-
-- Overpays for acquisitions
-- Buys back stock aggressively at inflated prices or while overleveraged
-- Issues equity at unattractive prices
-- Maintains an unsustainable dividend
-- Pursues low-return projects
-- Frequently changes strategy without accountability
-
-Suggested anchors:
-
-- **10:** Long record of high-return reinvestment and shareholder-aware decisions.
-- **5:** Mixed history, with both value-creating and questionable decisions.
-- **0:** Repeated value-destructive allocation, distressed issuance, or unsustainable distributions.
-
-### 4. Dilution and Shareholder Treatment, 15%
-
-Score high when:
-
-- Share count is stable or declining without compromising financial resilience
-- Stock-based compensation is reasonable and transparently reported
-- Equity issuance is rare and value-accretive
-- Buybacks exceed dilution over time
-- Minority shareholders are treated fairly
-
-Score low when:
-
-- Share count grows materially without proportional value creation
-- Stock-based compensation is excessive
-- Repeated equity issuance funds operating losses
-- Related-party transactions transfer value away from shareholders
-- Dual-class or control structures harm minority owners
-
-Suggested anchors:
-
-- **10:** Long-term per-share value compounding with minimal dilution.
-- **5:** Moderate dilution that may be offset by growth.
-- **0:** Severe or recurring dilution, shareholder value leakage, or coercive financing.
-
-### 5. Business Durability and Downside Protection, 15%
-
-Score high when the business has:
-
-- Durable competitive advantages
-- Recurring or mission-critical revenue
-- Pricing power
-- Diversified customers, suppliers, geographies, and products
-- Resilience across cycles
-- Low disruption risk
-- Favorable industry structure
-
-Score low when the business has:
-
-- Commodity exposure without cost advantage
-- High cyclicality
-- High customer concentration
-- Weak competitive position
-- Obsolescence risk
-- Heavy regulatory, litigation, or geopolitical exposure
-- Fragile unit economics
-
-Suggested anchors:
-
-- **10:** Durable moat and resilient demand through stress.
-- **5:** Viable business but exposed to cycles, competition, or execution.
-- **0:** Structurally challenged, obsolete, or highly fragile business model.
-
-### 6. Governance and Alignment, 10%
-
-Score high when:
-
-- Management and board incentives align with long-term per-share value
-- Insider ownership is meaningful but not abusive
-- Compensation metrics emphasize returns, cash flow, and per-share outcomes
-- Board independence and oversight are credible
-- Disclosure quality is high
-- Related-party transactions are limited and fair
-
-Score low when:
-
-- Incentives reward size, revenue, or adjusted metrics regardless of value creation
-- Related-party transactions are material or opaque
-- Management has a record of poor disclosure
-- Control structure disadvantages minority shareholders
-- Governance has recurring controversies
-
-Suggested anchors:
-
-- **10:** Strong alignment, clean governance, high-quality disclosure.
-- **5:** Standard governance with some misalignment or disclosure gaps.
-- **0:** Serious governance red flags or shareholder-hostile control.
-
-## Calculation Method
-
-1. Assign a raw score from 0 to 10 for each category.
-2. Multiply each raw score by its weight.
-3. Sum weighted contributions.
-4. Round the final score to one decimal place.
-5. Assign confidence:
-   - **High:** Multiple primary-source filings and enough financial history are available.
-   - **Medium:** Some primary data is available, but important details are missing.
-   - **Low:** The assessment relies on limited, stale, unaudited, or user-provided data only.
-
-Formula:
-
-```text
-Final Score =
-0.20 * Balance Sheet +
-0.20 * Cash Generation +
-0.20 * Capital Allocation +
-0.15 * Dilution +
-0.15 * Business Durability +
-0.10 * Governance
-```
-
-## Evidence Rules
-
-- Prefer primary filings, audited financial statements, regulatory filings, and company disclosures.
-- Separate facts from judgments.
-- Do not invent missing figures.
-- Do not use current market data unless available in the conversation or through an explicitly permitted data source.
-- When data is missing, state what is unknown and reduce confidence.
-- Distinguish valuation risk from capital preservation risk. A wonderful company can still be a poor investment at an excessive valuation, but this score primarily assesses preservation of shareholder capital through business quality, financing risk, governance, and allocation discipline.
-- Be careful with financial advice language. Present analysis, not recommendations to buy, sell, or hold.
-
-## Red Flags That Should Cap the Score
-
-Apply these caps unless strong contrary evidence is available:
-
-- **Score cap 6.0:** Persistent free-cash-flow burn without a clear funding path.
-- **Score cap 6.0:** Material and recurring dilution above underlying value creation.
-- **Score cap 5.0:** High leverage with weak interest coverage.
-- **Score cap 5.0:** Major acquisition integration failure or repeated value-destructive M&A.
-- **Score cap 4.0:** Serious accounting-quality concerns or restatements affecting core metrics.
-- **Score cap 4.0:** Related-party transactions that appear to transfer value from shareholders.
-- **Score cap 3.0:** Going-concern warning, distressed refinancing, or acute liquidity risk.
-- **Score cap 2.0:** Evidence of fraud, insolvency, coercive recapitalization, or severe shareholder impairment.
-
-If a cap is applied, explain it clearly.
-
-## Sector Adjustments
-
-Use default scoring unless the user asks for a sector-specific approach. Consider these adjustments:
-
-- **Banks and insurers:** Emphasize regulatory capital, asset quality, reserve adequacy, liquidity, underwriting discipline, and book-value protection.
-- **REITs:** Emphasize funds from operations, leverage, asset quality, debt maturity ladder, tenant concentration, payout ratio, and access to capital.
-- **Utilities and infrastructure:** Emphasize regulatory compact, debt maturity schedule, allowed returns, capital intensity, and dividend coverage.
-- **Commodity producers:** Emphasize cost curve position, reserve quality, hedging, balance-sheet strength, and cycle survival.
-- **Biotech and pre-revenue companies:** Emphasize cash runway, trial risk, financing need, dilution risk, pipeline concentration, and partnership quality.
-- **Software and subscription businesses:** Emphasize net retention, customer concentration, cash conversion, stock-based compensation, competitive durability, and Rule-of-40 context.
-
-## Refusal and Safety Boundaries
-
-Do not provide personalized investment advice. Avoid commands such as “buy,” “sell,” “hold,” or “short.” When the user asks for a recommendation, redirect to analytical framing:
-
-- “Here is the capital preservation profile and the key risks to evaluate.”
-- “This does not determine suitability for your portfolio.”
-
-Do not fabricate financial statements, legal conclusions, or audit opinions.

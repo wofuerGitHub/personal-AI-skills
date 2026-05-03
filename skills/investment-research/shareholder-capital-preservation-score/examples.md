@@ -1,122 +1,98 @@
-# Examples: shareholder-capital-preservation-score
+# Examples: Shareholder Capital Preservation Score
 
-## Example 1: Strong Capital Preserver
+## Example 1: Minimal Prompt
 
-### User Prompt
+### User Request
 
-Score ExampleCo's shareholder capital preservation from 0 to 10. It has net cash, 20% return on invested capital, steady free cash flow, share count down 2% annually, no major acquisitions, and insider ownership of 8%.
+```text
+Score XYZ Corp for shareholder capital preservation on a 0-to-10 scale. It has net cash, stable free cash flow, low cyclicality, and trades at about 14x free cash flow.
+```
 
-### Expected Response
+### Expected Behavior
 
-## Shareholder Capital Preservation Score
+The assistant should provide a provisional score, explain that the limited data reduces confidence, and avoid inventing missing financial metrics. It should use the weighted rubric and identify missing items such as debt maturity details, governance, capital allocation history, and accounting quality.
 
-**Company:** ExampleCo  
-**Period reviewed:** User-provided summary  
-**Score:** 8.6/10  
-**Confidence:** Low
+## Example 2: Detailed Equity Data
 
-## Rationale
+### User Request
 
-ExampleCo appears to have a strong capital preservation profile based on the provided facts. Net cash, consistent free cash flow, high returns on invested capital, modest share-count reduction, and insider ownership all support a high score. Confidence is low because the assessment relies only on the user summary, not primary financial statements.
+```text
+Evaluate ABC plc for shareholder capital preservation.
 
-## Score Breakdown
+Data:
+- Cash: £900M
+- Total debt: £350M
+- Free cash flow: £210M, positive for 10 straight years
+- Revenue: low single-digit growth
+- Operating margin: 22%, stable
+- Interest coverage: 18x
+- Share count: down 1% annually for 5 years
+- Dividends: 35% payout ratio
+- Acquisitions: small bolt-ons, no major write-offs
+- Valuation: 12x normalized FCF
+- Risks: mature market, modest customer concentration
+```
 
-| Category | Weight | Raw Score | Weighted Contribution | Key Evidence |
-|---|---:|---:|---:|---|
-| Balance-sheet resilience | 20% | 9.5 | 1.90 | Net cash position |
-| Cash generation and earnings quality | 20% | 8.5 | 1.70 | Steady free cash flow |
-| Capital allocation discipline | 20% | 8.5 | 1.70 | High ROIC; no major acquisition concerns |
-| Dilution and shareholder treatment | 15% | 9.0 | 1.35 | Share count down 2% annually |
-| Business durability and downside protection | 15% | 8.0 | 1.20 | High returns suggest quality, but durability details are limited |
-| Governance and alignment | 10% | 7.5 | 0.75 | Insider ownership of 8% |
+### Expected Behavior
 
-## Main Strengths
+The assistant should calculate a high but not perfect score, likely in the strong or exceptional band depending on assumptions. It should cite balance-sheet strength, free-cash-flow durability, conservative payout, and reasonable valuation as positives, while noting mature-market and concentration risks.
 
-- Net cash balance sheet.
-- Consistent free cash flow.
-- Evidence of per-share discipline through buybacks or controlled issuance.
+## Example 3: Missing Context
 
-## Main Risks
+### User Request
 
-- Durability, customer concentration, and accounting quality are not provided.
-- No valuation assessment is included.
-
-## Watch Items
-
-- Whether buybacks were made at reasonable prices.
-- Whether free cash flow remains stable in a downturn.
-
-## Assumptions and Limitations
-
-- This is based only on the user-provided summary.
-- No buy, sell, or hold recommendation is implied.
-
-## Example 2: Weak Capital Preserver
-
-### User Prompt
-
-Score RiskyCo. It has negative free cash flow for five years, share count doubled, net debt is 5x EBITDA, and management keeps making acquisitions.
-
-### Expected Response
-
-## Shareholder Capital Preservation Score
-
-**Company:** RiskyCo  
-**Period reviewed:** User-provided summary  
-**Score:** 2.5/10  
-**Confidence:** Low
-
-## Rationale
-
-RiskyCo shows several capital preservation red flags: persistent free-cash-flow burn, severe dilution, high leverage, and acquisition-driven strategy. These factors materially increase the risk of permanent impairment for shareholders.
-
-## Score Breakdown
-
-| Category | Weight | Raw Score | Weighted Contribution | Key Evidence |
-|---|---:|---:|---:|---|
-| Balance-sheet resilience | 20% | 2.0 | 0.40 | Net debt around 5x EBITDA |
-| Cash generation and earnings quality | 20% | 1.5 | 0.30 | Negative free cash flow for five years |
-| Capital allocation discipline | 20% | 2.0 | 0.40 | Continued acquisitions despite weak cash flow |
-| Dilution and shareholder treatment | 15% | 1.0 | 0.15 | Share count doubled |
-| Business durability and downside protection | 15% | 4.0 | 0.60 | Insufficient business-quality data; weak cash flow is concerning |
-| Governance and alignment | 10% | 6.0 | 0.60 | No direct governance data provided |
-
-## Main Strengths
-
-- None evident from the provided information.
-
-## Main Risks
-
-- High leverage.
-- Repeated dilution.
-- Persistent cash burn.
-- Potential value destruction through acquisitions.
-
-## Watch Items
-
-- Liquidity runway and maturity schedule.
-- Covenant compliance.
-- Acquisition returns and goodwill impairment risk.
-- Whether equity issuance is required to fund operations or debt service.
-
-## Assumptions and Limitations
-
-- Score is capped by persistent cash burn, high leverage, and recurring dilution.
-- Confidence is low because only a short summary was provided.
-
-## Example 3: Incomplete Data
-
-### User Prompt
-
+```text
 Give Tesla a shareholder capital preservation score.
+```
 
-### Expected Response Pattern
+### Expected Behavior
 
-Ask for or gather the relevant period and data if available. If no current data source is available, explain the limitation and provide a framework-based assessment only if sufficient information is already in context. Do not invent current financial figures.
+The assistant should ask for the desired time period and data source or provide a clearly provisional framework if data is not available. It should not invent current metrics. It should explain that current filings, cash, debt, free cash flow, valuation, governance, and business-risk data are needed for a reliable score.
 
-Required elements:
+## Example 4: Red-Flag Case
 
-- State the period reviewed.
-- Identify missing data.
-- Assign low confidence if relying on incomplete information.
-- Avoid buy/sell/hold advice.
+### User Request
+
+```text
+Score DEF Inc. It has negative free cash flow, debt due in six months, no committed refinancing, a going-concern warning, and repeated equity dilution.
+```
+
+### Expected Behavior
+
+The assistant should identify severe capital-preservation risks and apply a red-flag cap. The final score should be low, likely capped at 3 or below, with clear rationale around liquidity, refinancing, dilution, and going-concern risk.
+
+## Example 5: Scope Boundary
+
+### User Request
+
+```text
+Score this stock and tell me whether I should buy it today.
+```
+
+### Expected Behavior
+
+The assistant should provide the research score if enough data is available but should not give personalized buy/sell/hold advice. It should state that the result is investment research support, not a trading recommendation.
+
+## Example 6: Peer Comparison
+
+### User Request
+
+```text
+Compare Companies A, B, and C on shareholder capital preservation using these supplied metrics.
+```
+
+### Expected Behavior
+
+The assistant should score each company with the same rubric, show a comparable table, and explain where differences are driven by balance sheet, cash flow, valuation, capital allocation, or governance.
+
+## Example 7: Test Request
+
+### User Request
+
+```text
+Create test cases for the shareholder-capital-preservation-score skill.
+```
+
+### Expected Behavior
+
+The assistant should generate tests that check scoring structure, financial-advice boundaries, red-flag caps, missing-data handling, and consistency of the 0-to-10 scale.

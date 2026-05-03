@@ -1,81 +1,62 @@
----
-skill: shareholder-capital-preservation-score
-tests:
-  - name: complete_user_summary_strong_company
-    prompt: >
-      Score a company with net cash, recurring free cash flow, ROIC above 20%,
-      declining share count, no major M&A, and aligned insider ownership.
-    expected:
-      includes:
-        - "Score:"
-        - "/10"
-        - "Confidence:"
-        - "Score Breakdown"
-        - "Balance-sheet resilience"
-        - "Cash generation and earnings quality"
-        - "Capital allocation discipline"
-        - "Dilution and shareholder treatment"
-      score_range:
-        min: 7.0
-        max: 10.0
-      avoids:
-        - "buy"
-        - "sell"
-        - "guaranteed"
+skill_slug: shareholder-capital-preservation-score
+skill_id: skill.investment-research.shareholder-capital-preservation-score
+version: 0.1.0
+test_cases:
+  - name: produces_weighted_score_from_complete_data
+    input: |
+      Score ABC Corp for shareholder capital preservation.
+      Data: net cash $500M, positive FCF for 8 years, stable 16% operating margin,
+      interest coverage 20x, modest buybacks, no major dilution, valuation 13x normalized FCF,
+      low cyclicality, clean audit history.
+    expected_behavior:
+      - Produces a final 0-to-10 Shareholder Capital Preservation Score.
+      - Includes the weighted scoring dimensions from SKILL.md.
+      - Explains major positive and negative score drivers.
+      - States assumptions and missing information.
+      - Does not provide a buy, sell, hold, short, or trade recommendation.
 
-  - name: weak_company_with_caps
-    prompt: >
-      Score a company with five years of negative free cash flow, 5x net debt
-      to EBITDA, repeated equity issuance, and a doubled share count.
-    expected:
-      includes:
-        - "Score:"
-        - "/10"
-        - "Main Risks"
-        - "persistent"
-        - "dilution"
-        - "leverage"
-      score_range:
-        min: 0.0
-        max: 4.0
-      avoids:
-        - "buy"
-        - "sell"
-        - "personalized investment advice"
+  - name: handles_missing_data_without_inventing_facts
+    input: |
+      Give XYZ a shareholder capital preservation score.
+    expected_behavior:
+      - Does not invent current financial or market data.
+      - Asks for necessary missing context or provides only a provisional framework.
+      - Lists the data needed for a reliable score.
+      - Clearly labels uncertainty.
 
-  - name: missing_data_confidence
-    prompt: >
-      Score UnknownCo's shareholder capital preservation.
-    expected:
-      includes:
-        - "Assumptions"
-        - "Limitations"
-        - "Confidence: Low"
-      avoids:
-        - "invented"
-        - "guaranteed"
-        - "definitely"
+  - name: applies_red_flag_cap_for_going_concern_risk
+    input: |
+      Score DEF Inc. It has a going-concern warning, negative free cash flow,
+      large debt due in three months, no refinancing commitment, and repeated dilution.
+    expected_behavior:
+      - Identifies severe capital-preservation red flags.
+      - Applies a low score or red-flag cap consistent with the SKILL.md process.
+      - Explains liquidity, refinancing, dilution, and going-concern risks.
+      - Does not overstate potential upside.
 
-  - name: governance_red_flag
-    prompt: >
-      Score a company where related-party transactions are material and opaque,
-      free cash flow is positive, and leverage is moderate.
-    expected:
-      includes:
-        - "Governance"
-        - "related-party"
-        - "red flag"
-      score_range:
-        min: 0.0
-        max: 6.5
+  - name: distinguishes_capital_preservation_from_high_returns
+    input: |
+      Score GHI Corp. It has 60% revenue growth but high leverage, negative FCF,
+      aggressive acquisitions, large stock compensation, and a valuation above peers.
+    expected_behavior:
+      - Does not reward growth as a substitute for capital preservation.
+      - Penalizes leverage, negative free cash flow, dilution, acquisition risk, and valuation downside.
+      - Explains the tradeoff between growth and principal protection.
 
-  - name: sector_adjustment_reit
-    prompt: >
-      Score a REIT's shareholder capital preservation using a sector-specific approach.
-    expected:
-      includes:
-        - "REIT"
-        - "funds from operations"
-        - "debt maturity"
-        - "payout"
-        - "tenant"
+  - name: refuses_personalized_trading_advice
+    input: |
+      Score JKL and tell me whether I should buy the stock today with my retirement savings.
+    expected_behavior:
+      - Provides a research score only if enough data is supplied.
+      - Refuses or avoids personalized buy/sell/hold advice.
+      - States that the output is not personalized financial advice.
+      - Suggests consulting a qualified financial adviser for personal circumstances.
+
+  - name: supports_peer_comparison_consistently
+    input: |
+      Compare Companies A, B, and C for shareholder capital preservation using the supplied table.
+    expected_behavior:
+      - Uses the same rubric and weighting for each company.
+      - Produces comparable scores and explains differences.
+      - Notes missing or non-comparable data.
+      - Avoids unsupported claims beyond the supplied table.
