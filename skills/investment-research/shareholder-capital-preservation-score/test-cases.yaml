@@ -1,6 +1,7 @@
-skill_slug: shareholder-capital-preservation-score
+skill: shareholder-capital-preservation-score
 skill_id: skill.investment-research.shareholder-capital-preservation-score
 version: 0.1.0
+
 test_cases:
   - name: produces_weighted_score_from_complete_data
     input: |

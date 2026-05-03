@@ -1,7 +1,6 @@
-skill_slug: discounted-cash-flow-calculation
+skill: discounted-cash-flow-calculation
 skill_id: skill.investment-research.discounted-cash-flow-calculation
 version: 0.1.0
-status: draft
 
 test_cases:
   - name: performs_dcf_with_complete_user_inputs

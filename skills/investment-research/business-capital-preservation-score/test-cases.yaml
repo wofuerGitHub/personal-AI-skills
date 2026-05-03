@@ -1,8 +1,6 @@
-skill_slug: business-capital-preservation-score
+skill: business-capital-preservation-score
 skill_id: skill.investment-research.business-capital-preservation-score
-section: investment-research
 version: 0.1.0
-status: draft
 
 test_cases:
   - name: scores_complete_input_with_weighted_rubric
