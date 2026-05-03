@@ -16,17 +16,22 @@ When users ask for filing analysis, fundamentals extraction, trend analysis, ris
    - `skills/investment-research/company-analysis/SKILL.md`
    - `skills/investment-research/company-analysis/examples.md`
    - `skills/investment-research/company-analysis/test-cases.yaml`
+
    - `skills/investment-research/reports-search/SKILL.md`
    - `skills/investment-research/reports-search/test-cases.yaml`
+   
    - `skills/investment-research/discounted-cash-flow-calculation/SKILL.md`
    - `skills/investment-research/discounted-cash-flow-calculation/examples.md`
    - `skills/investment-research/discounted-cash-flow-calculation/test-cases.yaml`
+   
    - `skills/investment-research/business-capital-preservation-score/SKILL.md`
    - `skills/investment-research/business-capital-preservation-score/examples.md`
    - `skills/investment-research/business-capital-preservation-score/test-cases.yaml`
+   
    - `skills/investment-research/shareholder-capital-preservation-score/SKILL.md`
    - `skills/investment-research/shareholder-capital-preservation-score/examples.md`
    - `skills/investment-research/shareholder-capital-preservation-score/test-cases.yaml`
+   
    - `repo-config/quality-checklist.md`
 3. Prefer repository skill behavior over generic behavior.
 4. If repository content is unavailable, state that explicitly and continue with best-effort behavior.

@@ -57,7 +57,7 @@ Files:
 - Web browsing: optional
 - Canvas: optional
 - Image generation: disabled
-- Actions: disabled for v0.1
+- Actions: enabled
 
 ## v0.1 Scope
 

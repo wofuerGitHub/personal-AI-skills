@@ -97,7 +97,7 @@ Files:
 - Code interpreter / data analysis: enabled
 - Canvas: optional
 - Image generation: disabled
-- Actions: disabled for v0.2
+- Actions: enabled
 
 ## Primary Users
 
