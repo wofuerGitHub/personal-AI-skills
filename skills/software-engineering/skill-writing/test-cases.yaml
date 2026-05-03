@@ -83,3 +83,13 @@ test_cases:
       - scopes the skill to generating ADR documents from user-provided context
       - includes assumptions and open questions for missing technical context
       - includes tests for missing decision drivers and unsupported claims
+
+
+  - name: always_uses_repo_skill_template
+    input: |
+      Create a skill called "customer-support-triage".
+      Generate all files.
+    expected_behavior:
+      - reads and applies repo-config/skill-template.md before drafting SKILL.md
+      - keeps SKILL.md section order aligned with the template
+      - does not output an ad-hoc SKILL.md structure
