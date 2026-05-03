@@ -6,7 +6,7 @@ It is useful when a user has an idea like "create a skill for code review" or "m
 
 ## What it creates
 
-- `SKILL.md` — the main behavior specification
+- `SKILL.md` — the main behavior specification (always generated from `repo-config/skill-template.md`)
 - `README.md` — user-facing documentation
 - `examples.md` — realistic examples of how the skill should behave
 - `test-cases.yaml` — checkable scenarios for evaluating the skill

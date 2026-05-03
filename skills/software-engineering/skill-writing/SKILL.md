@@ -81,6 +81,8 @@ Focus on practical usefulness: scope, instructions, examples, edge cases, safety
 
 ### Skill Writing Process
 
+
+0. Before drafting `SKILL.md`, load and use `repo-config/skill-template.md` as the required base template.
 1. Identify the skill's core purpose from the user's prompt.
 2. Derive a concise skill name, stable skill ID, version, status, owner, and last-updated date.
 3. Define the intended user value and the concrete tasks the skill supports.
@@ -98,7 +100,9 @@ Focus on practical usefulness: scope, instructions, examples, edge cases, safety
 
 ### File Generation Guidelines
 
-When generating a complete skill package, use this default structure unless the user asks otherwise:
+When generating a complete skill package, use this default structure unless the user asks otherwise.
+
+`SKILL.md` must always be created by filling `repo-config/skill-template.md` (do not create ad-hoc SKILL.md structures):
 
 ```text
 <skill-name>/
@@ -110,19 +114,9 @@ When generating a complete skill package, use this default structure unless the 
 
 #### `SKILL.md`
 
-Include:
+Use the sections and ordering from `repo-config/skill-template.md` exactly, then fill each section with skill-specific content.
 
-- Title
-- Metadata
-- Purpose
-- Use Cases
-- Not For
-- Inputs
-- Output
-- Instructions
-- Default Output Format
-
-The `SKILL.md` file is the authoritative behavioral specification.
+The `SKILL.md` file is the authoritative behavioral specification and must remain template-aligned.
 
 #### `README.md`
 
