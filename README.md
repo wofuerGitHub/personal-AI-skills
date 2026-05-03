@@ -8,7 +8,6 @@ A lightweight repository for designing, documenting, and maintaining reusable AI
 - `docs/roadmap.md` — roadmap and future plans.
 - `repo-config/skill-template.md` — base template for authoring new skills.
 - `repo-config/quality-checklist.md` — quality criteria for reviewing skills.
-- `personal-ai-skills/README.md` — placeholder for skill package documentation.
 
 ## What Is a Skill?
 

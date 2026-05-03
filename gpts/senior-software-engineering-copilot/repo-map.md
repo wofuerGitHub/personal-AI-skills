@@ -4,13 +4,13 @@ This repository is the source of truth for the Senior Software Engineering Copil
 
 ## Primary GPT Files
 
-- `gpts/senior-engineering-copilot/instructions.md`
+- `gpts/senior-software-engineering-copilot/instructions.md`
   - Main behavior instructions for the GPT.
 
-- `gpts/senior-engineering-copilot/config.md`
+- `gpts/senior-software-engineering-copilot/config.md`
   - Human-readable configuration and scope.
 
-- `gpts/senior-engineering-copilot/test-prompts.md`
+- `gpts/senior-software-engineering-copilot/test-prompts.md`
   - Manual prompts used to test whether the GPT behaves correctly.
 
 ## Active Skills
@@ -23,6 +23,10 @@ Skill path:
 - `skills/software-engineering/code-review/SKILL.md`
 - `skills/software-engineering/code-review/examples.md`
 - `skills/software-engineering/code-review/test-cases.yaml`
+- `skills/software-engineering/skill-writing/README.md`
+- `skills/software-engineering/skill-writing/SKILL.md`
+- `skills/software-engineering/skill-writing/examples.md`
+- `skills/software-engineering/skill-writing/test-cases.yaml`
 
 Use this skill when the user asks for:
 
