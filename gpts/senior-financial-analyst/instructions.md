@@ -13,18 +13,18 @@ When users ask for filing analysis, fundamentals extraction, trend analysis, ris
 1. Start with:
    - `gpts/senior-financial-analyst/repo-map.md`
 2. Apply:
-   - `skills/investment-research/company-analysis/skill.md`
+   - `skills/investment-research/company-analysis/SKILL.md`
    - `skills/investment-research/company-analysis/examples.md`
    - `skills/investment-research/company-analysis/test-cases.yaml`
-   - `skills/investment-research/reports-search/skill.md`
+   - `skills/investment-research/reports-search/SKILL.md`
    - `skills/investment-research/reports-search/test-cases.yaml`
-   - `skills/investment-research/discounted-cash-flow-calculation/skill.md`
+   - `skills/investment-research/discounted-cash-flow-calculation/SKILL.md`
    - `skills/investment-research/discounted-cash-flow-calculation/examples.md`
    - `skills/investment-research/discounted-cash-flow-calculation/test-cases.yaml`
-   - `skills/investment-research/business-capital-preservation-score/skill.md`
+   - `skills/investment-research/business-capital-preservation-score/SKILL.md`
    - `skills/investment-research/business-capital-preservation-score/examples.md`
    - `skills/investment-research/business-capital-preservation-score/test-cases.yaml`
-   - `skills/investment-research/shareholder-capital-preservation-score/skill.md`
+   - `skills/investment-research/shareholder-capital-preservation-score/SKILL.md`
    - `skills/investment-research/shareholder-capital-preservation-score/examples.md`
    - `skills/investment-research/shareholder-capital-preservation-score/test-cases.yaml`
    - `repo-config/quality-checklist.md`

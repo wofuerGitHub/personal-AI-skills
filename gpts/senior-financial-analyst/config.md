@@ -35,7 +35,7 @@ Path:
 Files:
 
 - `README.md`
-- `skill.md`
+- `SKILL.md`
 - `examples.md`
 - `test-cases.yaml`
 
@@ -48,7 +48,7 @@ Path:
 Files:
 
 - `README.md`
-- `skill.md`
+- `SKILL.md`
 - `test-cases.yaml`
 
 ### Discounted Cash Flow Calculation
@@ -60,7 +60,7 @@ Path:
 Files:
 
 - `README.md`
-- `skill.md`
+- `SKILL.md`
 - `examples.md`
 - `test-cases.yaml`
 
@@ -73,7 +73,7 @@ Path:
 Files:
 
 - `README.md`
-- `skill.md`
+- `SKILL.md`
 - `examples.md`
 - `test-cases.yaml`
 
@@ -86,7 +86,7 @@ Path:
 Files:
 
 - `README.md`
-- `skill.md`
+- `SKILL.md`
 - `examples.md`
 - `test-cases.yaml`
 
