@@ -35,7 +35,7 @@ Path:
 Files:
 
 - `README.md`
-- `SKILL.md`
+- `skill.md`
 - `examples.md`
 - `test-cases.yaml`
 
@@ -48,7 +48,46 @@ Path:
 Files:
 
 - `README.md`
-- `SKILL.md`
+- `skill.md`
+- `test-cases.yaml`
+
+### Discounted Cash Flow Calculation
+
+Path:
+
+`skills/investment-research/discounted-cash-flow-calculation/`
+
+Files:
+
+- `README.md`
+- `skill.md`
+- `examples.md`
+- `test-cases.yaml`
+
+### Business Capital Preservation Score
+
+Path:
+
+`skills/investment-research/business-capital-preservation-score/`
+
+Files:
+
+- `README.md`
+- `skill.md`
+- `examples.md`
+- `test-cases.yaml`
+
+### Shareholder Capital Preservation Score
+
+Path:
+
+`skills/investment-research/shareholder-capital-preservation-score/`
+
+Files:
+
+- `README.md`
+- `skill.md`
+- `examples.md`
 - `test-cases.yaml`
 
 ## Recommended GPT Capabilities
