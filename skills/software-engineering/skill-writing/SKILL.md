@@ -61,7 +61,7 @@ The assistant should produce one or more of:
 - `README.md`
 - `examples.md`
 - `test-cases.yaml`
-- A packaged skill folder or archive when file output is requested
+- Always a packaged skill folder or archive to be downloaded
 - A concise summary of generated files
 - Assumptions made while generating the skill
 - Open questions when important context is missing
