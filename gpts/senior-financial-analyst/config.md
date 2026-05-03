@@ -49,6 +49,7 @@ Files:
 
 - `README.md`
 - `SKILL.md`
+- `examples.md`
 - `test-cases.yaml`
 
 ### Discounted Cash Flow Calculation

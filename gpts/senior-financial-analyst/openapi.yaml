@@ -1,0 +1,348 @@
+openapi: 3.1.0
+info:
+  title: Personal AI Skills Raw GitHub Files
+  version: 0.2.0
+  description: Fetches source-of-truth skill files from the public personal-AI-skills GitHub repository.
+
+servers:
+  - url: https://raw.githubusercontent.com/wofuerGitHub/personal-AI-skills/main
+    description: Raw GitHub content from the main branch
+
+paths:
+  /gpts/senior-financial-analyst/repo-map.md:
+    get:
+      operationId: getSeniorFinancialAnalystRepoMap
+      summary: Get the Senior Financial Analyst repository map
+      description: Fetches the repo map that defines which GPT, skill, and config files this GPT should use.
+      responses:
+        "200":
+          description: Markdown file content
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /gpts/senior-financial-analyst/config.md:
+    get:
+      operationId: getSeniorFinancialAnalystConfig
+      summary: Get the Senior Financial Analyst GPT config
+      description: Fetches the GPT package config defining scope, versioning, capabilities, users, active skills, and boundaries.
+      responses:
+        "200":
+          description: Markdown file content
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /gpts/senior-financial-analyst/instructions.md:
+    get:
+      operationId: getSeniorFinancialAnalystInstructions
+      summary: Get the Senior Financial Analyst GPT instructions
+      description: Fetches the behavioral contract and output standards for the Senior Financial Analyst GPT.
+      responses:
+        "200":
+          description: Markdown file content
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /gpts/senior-financial-analyst/test-prompts.md:
+    get:
+      operationId: getSeniorFinancialAnalystTestPrompts
+      summary: Get the Senior Financial Analyst GPT test prompts
+      description: Fetches manual validation prompts and expected behavior for this GPT.
+      responses:
+        "200":
+          description: Markdown file content
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /skills/investment-research/company-analysis/README.md:
+    get:
+      operationId: getCompanyAnalysisReadme
+      summary: Get Company Analysis README
+      description: Fetches the README for the Company Analysis investment research skill.
+      responses:
+        "200":
+          description: Markdown file content
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /skills/investment-research/company-analysis/SKILL.md:
+    get:
+      operationId: getCompanyAnalysisSkill
+      summary: Get Company Analysis skill instructions
+      description: Fetches the main Company Analysis skill definition for 10-K/10-Q extraction, KPI normalization, trend analysis, risk analysis, and fundamentals output.
+      responses:
+        "200":
+          description: Markdown file content
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /skills/investment-research/company-analysis/examples.md:
+    get:
+      operationId: getCompanyAnalysisExamples
+      summary: Get Company Analysis examples
+      description: Fetches examples for applying the Company Analysis skill.
+      responses:
+        "200":
+          description: Markdown file content
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /skills/investment-research/company-analysis/test-cases.yaml:
+    get:
+      operationId: getCompanyAnalysisTestCases
+      summary: Get Company Analysis test cases
+      description: Fetches YAML test cases for the Company Analysis skill.
+      responses:
+        "200":
+          description: YAML file content
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /skills/investment-research/reports-search/README.md:
+    get:
+      operationId: getReportsSearchReadme
+      summary: Get Reports Search README
+      description: Fetches the README for the Reports Search investment research skill.
+      responses:
+        "200":
+          description: Markdown file content
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /skills/investment-research/reports-search/SKILL.md:
+    get:
+      operationId: getReportsSearchSkill
+      summary: Get Reports Search skill instructions
+      description: Fetches the main Reports Search skill definition for discovering, filtering, ranking, and summarizing analyst and research reports.
+      responses:
+        "200":
+          description: Markdown file content
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /skills/investment-research/reports-search/examples.md:
+    get:
+      operationId: getReportsSearchExamples
+      summary: Get Reports Search examples
+      description: Fetches examples for applying the Reports Search skill.
+      responses:
+        "200":
+          description: Markdown file content
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /skills/investment-research/reports-search/test-cases.yaml:
+    get:
+      operationId: getReportsSearchTestCases
+      summary: Get Reports Search test cases
+      description: Fetches YAML test cases for the Reports Search skill.
+      responses:
+        "200":
+          description: YAML file content
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /skills/investment-research/discounted-cash-flow-calculation/README.md:
+    get:
+      operationId: getDiscountedCashFlowCalculationReadme
+      summary: Get Discounted Cash Flow Calculation README
+      description: Fetches the README for the Discounted Cash Flow Calculation investment research skill.
+      responses:
+        "200":
+          description: Markdown file content
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /skills/investment-research/discounted-cash-flow-calculation/SKILL.md:
+    get:
+      operationId: getDiscountedCashFlowCalculationSkill
+      summary: Get Discounted Cash Flow Calculation skill instructions
+      description: Fetches the main Discounted Cash Flow Calculation skill definition for DCF modeling, assumptions, normalization, intrinsic value estimation, and sensitivity analysis.
+      responses:
+        "200":
+          description: Markdown file content
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /skills/investment-research/discounted-cash-flow-calculation/examples.md:
+    get:
+      operationId: getDiscountedCashFlowCalculationExamples
+      summary: Get Discounted Cash Flow Calculation examples
+      description: Fetches examples for applying the Discounted Cash Flow Calculation skill.
+      responses:
+        "200":
+          description: Markdown file content
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /skills/investment-research/discounted-cash-flow-calculation/test-cases.yaml:
+    get:
+      operationId: getDiscountedCashFlowCalculationTestCases
+      summary: Get Discounted Cash Flow Calculation test cases
+      description: Fetches YAML test cases for the Discounted Cash Flow Calculation skill.
+      responses:
+        "200":
+          description: YAML file content
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /skills/investment-research/business-capital-preservation-score/README.md:
+    get:
+      operationId: getBusinessCapitalPreservationScoreReadme
+      summary: Get Business Capital Preservation Score README
+      description: Fetches the README for the Business Capital Preservation Score investment research skill.
+      responses:
+        "200":
+          description: Markdown file content
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /skills/investment-research/business-capital-preservation-score/SKILL.md:
+    get:
+      operationId: getBusinessCapitalPreservationScoreSkill
+      summary: Get Business Capital Preservation Score skill instructions
+      description: Fetches the main Business Capital Preservation Score skill definition for evaluating business resilience, financial durability, and capital preservation characteristics.
+      responses:
+        "200":
+          description: Markdown file content
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /skills/investment-research/business-capital-preservation-score/examples.md:
+    get:
+      operationId: getBusinessCapitalPreservationScoreExamples
+      summary: Get Business Capital Preservation Score examples
+      description: Fetches examples for applying the Business Capital Preservation Score skill.
+      responses:
+        "200":
+          description: Markdown file content
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /skills/investment-research/business-capital-preservation-score/test-cases.yaml:
+    get:
+      operationId: getBusinessCapitalPreservationScoreTestCases
+      summary: Get Business Capital Preservation Score test cases
+      description: Fetches YAML test cases for the Business Capital Preservation Score skill.
+      responses:
+        "200":
+          description: YAML file content
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /skills/investment-research/shareholder-capital-preservation-score/README.md:
+    get:
+      operationId: getShareholderCapitalPreservationScoreReadme
+      summary: Get Shareholder Capital Preservation Score README
+      description: Fetches the README for the Shareholder Capital Preservation Score investment research skill.
+      responses:
+        "200":
+          description: Markdown file content
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /skills/investment-research/shareholder-capital-preservation-score/SKILL.md:
+    get:
+      operationId: getShareholderCapitalPreservationScoreSkill
+      summary: Get Shareholder Capital Preservation Score skill instructions
+      description: Fetches the main Shareholder Capital Preservation Score skill definition for evaluating shareholder outcomes, dilution, capital allocation, balance-sheet risk, and preservation of shareholder capital.
+      responses:
+        "200":
+          description: Markdown file content
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /skills/investment-research/shareholder-capital-preservation-score/examples.md:
+    get:
+      operationId: getShareholderCapitalPreservationScoreExamples
+      summary: Get Shareholder Capital Preservation Score examples
+      description: Fetches examples for applying the Shareholder Capital Preservation Score skill.
+      responses:
+        "200":
+          description: Markdown file content
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /skills/investment-research/shareholder-capital-preservation-score/test-cases.yaml:
+    get:
+      operationId: getShareholderCapitalPreservationScoreTestCases
+      summary: Get Shareholder Capital Preservation Score test cases
+      description: Fetches YAML test cases for the Shareholder Capital Preservation Score skill.
+      responses:
+        "200":
+          description: YAML file content
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /repo-config/quality-checklist.md:
+    get:
+      operationId: getQualityChecklist
+      summary: Get repository quality checklist
+      description: Fetches the shared quality checklist for repository-grounded GPT output.
+      responses:
+        "200":
+          description: Markdown file content
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /repo-config/skill-template.md:
+    get:
+      operationId: getSkillTemplate
+      summary: Get repository skill template
+      description: Fetches the shared skill template reference for repository-grounded GPT skills.
+      responses:
+        "200":
+          description: Markdown file content
+          content:
+            text/plain:
+              schema:
+                type: string
