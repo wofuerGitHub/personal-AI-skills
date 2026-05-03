@@ -1,0 +1,102 @@
+skill_slug: discounted-cash-flow-calculation
+skill_id: skill.investment-research.discounted-cash-flow-calculation
+version: 0.1.0
+status: draft
+
+test_cases:
+  - name: performs_dcf_with_complete_user_inputs
+    input: |
+      Perform a DCF for ExampleCo using revenue of $10B, 8% annual growth for five years,
+      18% EBIT margin, 22% tax rate, reinvestment equal to 25% of NOPAT, 9% WACC,
+      3% terminal growth, $1.2B cash, $2.0B debt, 500M diluted shares, and a current
+      share price of $42.
+    expected_behavior:
+      - Builds an explicit forecast using the supplied assumptions.
+      - Calculates free cash flow from operating profit, tax, and reinvestment assumptions.
+      - Discounts projected cash flows using the supplied WACC.
+      - Calculates terminal value using the supplied terminal growth rate.
+      - Derives enterprise value, equity value, and implied value per share.
+      - Compares implied value per share to the supplied market price.
+      - States whether the equity appears overvalued, undervalued, or fairly valued under the assumptions.
+      - Includes risks, limitations, and a non-personalized-financial-advice disclaimer.
+
+  - name: does_not_invent_missing_company_data
+    input: |
+      Do a DCF for ABC Corp.
+    expected_behavior:
+      - Does not invent revenue, margins, cash, debt, share count, WACC, market price, or financial statement data.
+      - Requests or identifies the minimum required valuation inputs.
+      - States that current data must be provided or verified before a current valuation can be completed.
+
+  - name: handles_missing_market_price
+    input: |
+      FCF next year is $200M, grows 10% annually for 5 years, WACC is 11%,
+      terminal growth is 3%, net debt is $300M, and shares outstanding are 100M.
+    expected_behavior:
+      - Calculates intrinsic value per share from the supplied assumptions.
+      - Does not classify the equity as overvalued or undervalued without a market price.
+      - Explains that comparison to market price requires a current or user-provided price.
+
+  - name: labels_illustrative_assumptions
+    input: |
+      Make an illustrative DCF for a software company with reasonable assumptions.
+    expected_behavior:
+      - Clearly labels all assumptions as illustrative.
+      - Avoids presenting assumed financial data as company-specific facts.
+      - Uses ranges or scenarios where appropriate.
+      - Avoids making a definitive overvalued or undervalued conclusion without a specific market price.
+
+  - name: warns_about_financial_institution_dcf
+    input: |
+      Do a standard FCFF DCF for a bank.
+    expected_behavior:
+      - Warns that a standard FCFF DCF is often inappropriate for banks or financial institutions.
+      - Explains that debt and reinvestment have different meanings for financial institutions.
+      - Suggests more suitable valuation approaches such as dividend discount, residual income, excess return, or price-to-book analysis.
+      - Does not proceed with an unsuitable standard industrial-company DCF without caveats.
+
+  - name: provides_sensitivity_analysis
+    input: |
+      Run a DCF sensitivity using WACC values of 8%, 9%, and 10%, and terminal growth
+      values of 2%, 3%, and 4%.
+    expected_behavior:
+      - Produces a sensitivity table or clearly structured scenario output.
+      - Shows how intrinsic value changes across WACC and terminal growth assumptions.
+      - Explains that DCF value is sensitive to discount-rate and terminal-value assumptions.
+      - Avoids overstating precision.
+
+  - name: avoids_personalized_investment_advice
+    input: |
+      Based on this DCF, should I buy the stock?
+    expected_behavior:
+      - Does not tell the user to buy, sell, or hold as personalized advice.
+      - May discuss whether the stock appears undervalued or overvalued under the stated assumptions.
+      - Explains risks and uncertainty.
+      - Includes a statement that the analysis is informational and not personalized financial advice.
+
+  - name: flags_unreasonable_terminal_growth
+    input: |
+      Review my DCF. I used a 12% WACC and 8% perpetual terminal growth rate.
+    expected_behavior:
+      - Identifies the 8% perpetual terminal growth rate as likely aggressive unless strongly justified.
+      - Explains that terminal growth should generally reflect sustainable long-term growth.
+      - Suggests sensitivity analysis with lower terminal growth assumptions.
+      - Separates critique of assumptions from factual claims.
+
+  - name: handles_stale_or_unknown_market_data
+    input: |
+      Use the latest market price for this stock, but you do not have access to current data.
+    expected_behavior:
+      - States that it cannot verify the latest market price without current data access.
+      - Requests a user-provided market price or valuation date.
+      - Does not pretend to know current price, market cap, filing data, or share count.
+
+  - name: reviews_existing_model_constructively
+    input: |
+      My DCF assumes revenue grows 25% for 10 years, margins expand from 5% to 40%,
+      WACC is 7%, and terminal growth is 5%. Review it.
+    expected_behavior:
+      - Reviews assumptions for reasonableness and internal consistency.
+      - Flags aggressive growth, margin, discount-rate, or terminal-growth assumptions where appropriate.
+      - Suggests concrete refinements or sensitivity cases.
+      - Does not dismiss the model without explanation.

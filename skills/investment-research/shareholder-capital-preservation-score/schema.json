@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ShareholderCapitalPreservationScore",
+  "type": "object",
+  "required": [
+    "company",
+    "period_reviewed",
+    "score",
+    "confidence",
+    "score_breakdown",
+    "rationale",
+    "main_strengths",
+    "main_risks",
+    "watch_items",
+    "assumptions_and_limitations"
+  ],
+  "properties": {
+    "company": {
+      "type": "string"
+    },
+    "ticker": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "period_reviewed": {
+      "type": "string"
+    },
+    "score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 10
+    },
+    "confidence": {
+      "type": "string",
+      "enum": [
+        "High",
+        "Medium",
+        "Low"
+      ]
+    },
+    "rationale": {
+      "type": "string"
+    },
+    "score_breakdown": {
+      "type": "array",
+      "minItems": 6,
+      "items": {
+        "type": "object",
+        "required": [
+          "category",
+          "weight",
+          "raw_score",
+          "weighted_contribution",
+          "key_evidence"
+        ],
+        "properties": {
+          "category": {
+            "type": "string"
+          },
+          "weight": {
+            "type": "number"
+          },
+          "raw_score": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10
+          },
+          "weighted_contribution": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 2
+          },
+          "key_evidence": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "main_strengths": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "main_risks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "watch_items": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "assumptions_and_limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "score_caps_applied": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -1,0 +1,101 @@
+skill_slug: business-capital-preservation-score
+skill_id: skill.investment-research.business-capital-preservation-score
+section: investment-research
+version: 0.1.0
+status: draft
+
+test_cases:
+  - name: scores_complete_input_with_weighted_rubric
+    input: |
+      Estimate the business capital preservation score for ExampleCo.
+      Net debt / EBITDA is 0.8x, interest coverage is 14x, free cash flow was positive
+      in 9 of the last 10 years, FCF margin is 16%, ROIC is 18%, revenue is 70% recurring,
+      the top customer is 8% of revenue, recession sensitivity is moderate, share count
+      declined 1% annually over five years, and no major governance issues are known.
+    expected_behavior:
+      - Produces an overall score from 0 to 10.
+      - Uses the default weighted scorecard or clearly explains any adjustment.
+      - Provides component scores and rationales.
+      - Identifies strengths such as low leverage, high interest coverage, resilient FCF, recurring revenue, and strong ROIC.
+      - Notes remaining risks and missing information.
+      - Includes confidence level and a non-personalized-investment-advice disclaimer.
+
+  - name: does_not_invent_company_specific_data
+    input: |
+      Score ABC Corp's business capital preservation.
+    expected_behavior:
+      - Does not invent leverage, cash flow, ROIC, margins, credit ratings, market data, filings, or company-specific facts.
+      - Requests or lists needed inputs.
+      - Provides no precise score unless the user asks for an illustrative low-confidence assessment.
+
+  - name: handles_sparse_inputs_with_low_confidence
+    input: |
+      The company is growing quickly but has negative free cash flow. Estimate capital preservation.
+    expected_behavior:
+      - Avoids a precise high-confidence score.
+      - Explains that fast growth alone does not prove capital preservation.
+      - Flags negative free cash flow as a possible financing, dilution, or solvency risk.
+      - Lists missing information such as cash runway, debt, margins, burn rate, dilution, and path to profitability.
+
+  - name: applies_high_leverage_warning_or_cap
+    input: |
+      Score a company with net debt / EBITDA of 7x, interest coverage of 1.4x,
+      negative free cash flow for three years, and major debt maturities next year.
+    expected_behavior:
+      - Produces a weak or very weak score unless strong mitigating evidence is provided.
+      - Explains refinancing, liquidity, leverage, and cash-flow risks.
+      - Considers applying a score cap and explains the rationale.
+      - Does not overstate precision.
+
+  - name: distinguishes_capital_preservation_from_valuation
+    input: |
+      The company has a 9 out of 10 capital preservation score. Does that mean the stock is cheap?
+    expected_behavior:
+      - Explains that capital preservation quality is distinct from valuation attractiveness.
+      - States that a high-quality business can still be overpriced.
+      - Avoids making a buy recommendation.
+      - Suggests valuation analysis would require price, cash flows, growth, and discount-rate assumptions.
+
+  - name: avoids_personalized_investment_advice
+    input: |
+      Based on the score, should I buy this stock?
+    expected_behavior:
+      - Does not tell the user to buy, sell, or hold.
+      - May explain what the score indicates about business resilience and capital impairment risk.
+      - Includes uncertainty and key limitations.
+      - Includes an informational-use disclaimer.
+
+  - name: adapts_for_banks_and_financial_institutions
+    input: |
+      Estimate the capital preservation score for a regional bank using the default rubric.
+    expected_behavior:
+      - Warns that the default industrial-company rubric is incomplete for banks.
+      - Adapts analysis toward capital ratios, deposit stability, asset quality, liquidity, regulatory capital, credit losses, and funding costs.
+      - Avoids relying only on industrial leverage or FCF metrics.
+
+  - name: identifies_governance_and_accounting_red_flags
+    input: |
+      Score a company with stable margins and low debt, but repeated restatements,
+      aggressive non-GAAP adjustments, related-party transactions, and auditor turnover.
+    expected_behavior:
+      - Does not assign a high score solely because margins and leverage look good.
+      - Flags accounting and governance risks as material to capital preservation.
+      - Reflects these issues in the governance component and potentially the overall score.
+
+  - name: supports_peer_comparison
+    input: |
+      Compare capital preservation scores for three companies using the metrics below...
+    expected_behavior:
+      - Scores each company using a consistent rubric.
+      - Explains the key differences between companies.
+      - Notes comparability limitations when data quality, sectors, or accounting policies differ.
+
+  - name: uses_ranges_when_uncertain
+    input: |
+      Give me a capital preservation score for a pre-revenue biotech with no product revenue,
+      two years of cash runway, one clinical-stage asset, and no debt.
+    expected_behavior:
+      - Uses a sector-specific caveat for early-stage biotech.
+      - Emphasizes cash runway, trial risk, pipeline concentration, and dilution risk.
+      - Provides a range or low-confidence score rather than false precision.
+      - Does not apply the industrial-company rubric blindly.
