@@ -468,3 +468,46 @@ Once the filing content is available, I can extract:
 
 I will not invent financial metrics from a link alone.
 ```
+---
+
+## Bad Example 13: 
+
+### User request
+
+```text
+Find the last 3 annual reports of Apple Inc. (AAPL).
+```
+
+### Expected assistant behavior
+
+- Identify the company as Apple Inc. and ticker as AAPL.
+- Search for the latest three annual reports from reliable official sources where possible.
+- Prefer company investor-relations pages, SEC filings, or official annual-report PDF pages.
+- Check that each link resolves or appears valid.
+- Return a plain link table unless another format is requested.
+- Include the report year, report type, source.
+- Note any access or verification limitations.
+
+### Not expected behavior
+
+- URL is missing.
+- URL links are not checked for data.
+
+### Example response shape
+
+```md
+## Report Links
+
+| Company | Ticker | Report Type | Fiscal Year | Source | Link Status |
+|---|---|---|---:|---|---|---|
+| Apple Inc. | AAPL | Annual report / 10-K | <year> | <SEC or Apple Investor Relations> | Valid |
+| Apple Inc. | AAPL | Annual report / 10-K | <year> | <SEC or Apple Investor Relations> | Valid |
+| Apple Inc. | AAPL | Annual report / 10-K | <year> | <SEC or Apple Investor Relations> | Valid |
+
+## Notes
+
+- I prioritized official company or SEC sources.
+- Link status reflects availability at the time checked.
+```
+
+---
