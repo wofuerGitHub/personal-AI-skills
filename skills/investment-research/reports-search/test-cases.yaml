@@ -1,3 +1,271 @@
 skill: reports-search
 id: skill.investment-research.reports-search
-version: 0.1.0
+version: 0.2.0
+
+test_cases:
+  # Original test cases
+  - name: us_sec_filer_returns_10k_and_10q
+    input: "Find the last 3 annual and last 3 quarterly reports for MSFT."
+    expected_behavior:
+      - "returns table output by default"
+      - "uses columns in exact order: Company, Type, Report, Period ended, Filed, Report link"
+      - "includes Form 10-K rows for annual reports"
+      - "includes Form 10-Q rows for quarterly reports"
+      - "uses one canonical SEC main filing document link per row"
+      - "does not include Checked, verified, content check, or source notes fields"
+      - "does not include SEC accession index pages as Report link when main filing document is available"
+
+  - name: json_output_uses_required_key_order
+    input: "Find last 3 annual and quarterly reports for Apple as JSON."
+    expected_behavior:
+      - "returns a JSON array"
+      - "each object uses keys in exact order: Company, Type, Report, Period ended, Filed, Report link"
+      - "does not include any checked or verification field"
+      - "includes only links that were checked successfully"
+
+  - name: non_us_company_uses_official_company_reports
+    input: "Find the last 3 annual and last 3 quarterly reports for Munich Re."
+    expected_behavior:
+      - "does not force SEC 10-K or 10-Q terminology"
+      - "uses official Munich Re annual and interim or quarterly report documents"
+      - "returns one canonical report link per result"
+      - "omits verification excerpts from the final answer"
+
+  - name: foreign_private_issuer_uses_form_20f_when_relevant
+    input: "Find the last 3 annual and last 3 quarterly reports for RACE."
+    expected_behavior:
+      - "recognizes RACE as Ferrari N.V."
+      - "uses Form 20-F for annual SEC reports when available"
+      - "uses official company quarterly results documents when 10-Q filings are not applicable"
+      - "returns checked links only"
+
+  - name: private_company_not_found
+    input: "Find annual and quarterly reports for SpaceX as JSON."
+    expected_behavior:
+      - "returns a JSON array with a single not found object"
+      - "sets Report to not found"
+      - "sets unavailable fields to not found"
+      - "does not fabricate a report link"
+      - "uses Report link: not found"
+
+  - name: multiple_companies_independent_lookup
+    input: "Run against Berkshire Hathaway, Investor AB, Apple, and Target as table."
+    expected_behavior:
+      - "runs lookup independently for each company"
+      - "uses SEC links for SEC filers"
+      - "uses official company report documents for non-U.S. companies where appropriate"
+      - "does not use one company's report cadence to infer another company's reports"
+
+  - name: typo_quarterly_is_understood
+    input: "Find last 3 annual and qarterly reports for AAPL."
+    expected_behavior:
+      - "treats qarterly as quarterly"
+      - "returns annual and quarterly results"
+      - "does not mention the typo unless necessary"
+
+  - name: no_unchecked_links
+    input: "Return possible report links for an obscure company even if not checked."
+    expected_behavior:
+      - "does not return unchecked links"
+      - "returns not found when no checked public report document is available"
+      - "does not provide speculative URLs"
+
+  # New test cases for additional coverage
+
+  - name: partial_results_recent_ipo
+    input: "Find the last 3 annual reports for a company that IPO'd 18 months ago."
+    expected_behavior:
+      - "returns only available reports (likely 1-2 annual reports)"
+      - "does not pad results with not found rows"
+      - "does not error when fewer reports exist than requested"
+
+  - name: delisted_company_historical_filings
+    input: "Find the last 3 annual reports for Toys R Us."
+    expected_behavior:
+      - "searches historical SEC EDGAR filings"
+      - "returns available historical reports if they exist"
+      - "uses not found if no historical filings are accessible"
+
+  - name: ticker_ambiguity_clarification
+    input: "Find annual reports for AA."
+    expected_behavior:
+      - "recognizes AA could refer to multiple companies"
+      - "searches for current ticker assignment or asks for clarification"
+      - "uses full company name in output to clarify which company"
+
+  - name: fiscal_year_non_calendar_year
+    input: "Find last 2 annual reports for Walmart."
+    expected_behavior:
+      - "recognizes Walmart's fiscal year ends January 31"
+      - "uses actual period end dates from filings (not calendar year assumptions)"
+      - "correctly identifies fiscal year 2024 as ending 2024-01-31"
+
+  - name: canadian_company_sedar_plus_filings
+    input: "Find the last 3 annual reports for Royal Bank of Canada."
+    expected_behavior:
+      - "searches SEDAR+ or company investor relations"
+      - "uses official annual report terminology"
+      - "does not force US SEC form types"
+
+  - name: uk_company_companies_house_filings
+    input: "Find the last 2 annual reports for Tesco PLC."
+    expected_behavior:
+      - "searches UK Companies House or Tesco investor relations"
+      - "uses Annual Report and Accounts terminology"
+      - "returns verified PDF or HTML document links"
+
+  - name: chinese_company_hong_kong_exchange
+    input: "Find annual reports for Tencent."
+    expected_behavior:
+      - "searches Hong Kong Stock Exchange or Tencent IR"
+      - "uses appropriate report terminology (Annual Report, not 10-K)"
+      - "handles potential language/translation considerations"
+
+  - name: recent_filing_within_last_month
+    input: "Find the most recent 10-K for any large tech company filed in the last 30 days."
+    expected_behavior:
+      - "successfully finds and verifies very recent filing"
+      - "uses current filing date"
+      - "link verification succeeds for newly published documents"
+
+  - name: mixed_sec_and_non_sec_companies
+    input: "Find last 2 annual reports for Microsoft, Toyota, and Alibaba."
+    expected_behavior:
+      - "uses Form 10-K for Microsoft (US SEC filer)"
+      - "uses Toyota official annual reports (Japanese company)"
+      - "uses Alibaba Form 20-F (foreign private issuer) or official reports"
+      - "does not mix filing types inappropriately"
+
+  - name: quarterly_only_request
+    input: "Get the last 4 quarters for Google as JSON."
+    expected_behavior:
+      - "returns only quarterly reports (Form 10-Q)"
+      - "does not include annual reports"
+      - "returns 4 most recent quarters"
+      - "uses JSON format with correct key order"
+
+  - name: annual_only_request
+    input: "Show me annual reports only for Amazon, last 5 years."
+    expected_behavior:
+      - "returns only annual reports (Form 10-K)"
+      - "does not include quarterly reports"
+      - "returns up to 5 most recent annual reports"
+
+  - name: company_name_vs_ticker_search
+    input: "Find reports for International Business Machines."
+    expected_behavior:
+      - "recognizes International Business Machines as IBM"
+      - "successfully searches by company name"
+      - "returns IBM filings with correct company name"
+
+  - name: parent_company_vs_subsidiary
+    input: "Find annual reports for Google."
+    expected_behavior:
+      - "recognizes Google is now Alphabet Inc."
+      - "returns Alphabet filings or asks for clarification"
+      - "uses correct legal entity name in output"
+
+  - name: ticker_symbol_with_exchange_suffix
+    input: "Find reports for NESN.SW."
+    expected_behavior:
+      - "recognizes .SW as Swiss exchange suffix"
+      - "searches for Nestlé reports"
+      - "handles exchange-specific ticker formats"
+
+  - name: very_old_company_many_filings
+    input: "Find last 3 annual reports for General Electric."
+    expected_behavior:
+      - "successfully retrieves recent filings despite decades of filing history"
+      - "returns 3 most recent, not oldest"
+      - "handles large filing history gracefully"
+
+  - name: merged_company_current_entity
+    input: "Find annual reports for Sprint Corporation."
+    expected_behavior:
+      - "recognizes Sprint merged with T-Mobile"
+      - "either returns historical Sprint filings or indicates merger status"
+      - "does not return T-Mobile filings unless appropriate"
+
+  - name: reit_special_filing_requirements
+    input: "Find annual reports for American Tower Corporation."
+    expected_behavior:
+      - "recognizes REIT status if relevant"
+      - "returns standard Form 10-K (REITs use same forms)"
+      - "handles any REIT-specific disclosure requirements"
+
+  - name: etf_or_fund_filings
+    input: "Find annual reports for SPY."
+    expected_behavior:
+      - "recognizes SPY as SPDR S&P 500 ETF Trust"
+      - "searches for appropriate fund filings (may be N-CSR not 10-K)"
+      - "uses correct form types for investment companies"
+
+  - name: bankrupt_company_final_filings
+    input: "Find the last annual report for Hertz before bankruptcy."
+    expected_behavior:
+      - "searches historical filings around bankruptcy period"
+      - "returns most recent available filing"
+      - "handles companies with disrupted filing schedules"
+
+  - name: dual_listed_company
+    input: "Find annual reports for Unilever."
+    expected_behavior:
+      - "recognizes Unilever's dual listing (UK and Netherlands)"
+      - "returns official consolidated annual reports"
+      - "does not duplicate results for both listings"
+
+  - name: date_range_specific_request
+    input: "Find all 10-Ks for Tesla filed between 2020 and 2022."
+    expected_behavior:
+      - "filters results to specified date range"
+      - "includes all filings within range"
+      - "excludes filings outside range"
+
+  - name: amended_filings_handling
+    input: "Find annual reports for a company that filed a 10-K/A amendment."
+    expected_behavior:
+      - "recognizes amended filings (Form 10-K/A)"
+      - "returns either original or amendment based on most current information"
+      - "does not duplicate original and amended versions unless requested"
+
+  - name: small_cap_or_pink_sheet_company
+    input: "Find annual reports for a small OTC/pink sheet company."
+    expected_behavior:
+      - "searches available SEC filings if company files"
+      - "returns not found if no public filings exist"
+      - "does not fabricate links for non-reporting companies"
+
+  - name: different_typos_understood
+    input: "Find anual and quartly reports for NVDA."
+    expected_behavior:
+      - "treats anual as annual"
+      - "treats quartly as quarterly"
+      - "returns correct NVIDIA filings"
+
+  - name: case_insensitive_ticker_search
+    input: "Find reports for msft and aapl."
+    expected_behavior:
+      - "treats lowercase tickers same as uppercase"
+      - "returns Microsoft and Apple filings"
+      - "does not fail due to case sensitivity"
+
+  - name: excessive_request_reasonable_limit
+    input: "Find the last 50 annual reports for IBM."
+    expected_behavior:
+      - "returns reasonable number of results (e.g., 10-20 max)"
+      - "does not attempt to return 50 reports"
+      - "may inform user of practical limit"
+
+  - name: empty_or_invalid_ticker
+    input: "Find annual reports for XYZ123INVALID."
+    expected_behavior:
+      - "recognizes ticker does not exist"
+      - "returns not found result"
+      - "does not fabricate company or reports"
+
+  - name: special_characters_in_company_name
+    input: "Find reports for AT&T."
+    expected_behavior:
+      - "handles ampersand and special characters correctly"
+      - "successfully searches for AT&T Inc."
+      - "returns verified filings"

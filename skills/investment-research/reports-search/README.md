@@ -1,23 +1,42 @@
-# Report Search Skill
+# Report Search
 
-This skill provides links to reports for **company analysis** as part of investment research.
+Find checked links to public company financial reports.
 
-# What it does
+This skill is designed to locate annual and quarterly financial-report documents for public companies. It prefers SEC EDGAR for U.S. filers and official company investor-relations websites for non-U.S. issuers or companies that publish report PDFs outside the SEC system.
 
-- Providing a plain link table to the asked information
-- Check that the links are valid
+## What it helps with
+
+- Finding recent 10-K and 10-Q filings.
+- Finding annual reports, Form 20-F reports, interim financial reports, half-year reports, and quarterly results reports.
+- Returning clean table or JSON output for downstream use.
+- Handling private companies or missing public reports with a clear `not found` result.
 
 ## Best inputs
 
-Provide one or more of:
+Provide:
 
-- company name
-- International Securities Identification Number (ISIN)
-- ticker
-- one or more links to one or more reports
+- Company name or ticker.
+- Number of annual and quarterly reports needed.
+- Desired output format: table or JSON.
+- Any jurisdiction or source constraints.
 
-## Example request
+Example:
 
+```text
+Find the last 3 annual reports and last 3 quarterly reports for Apple as JSON.
 ```
-Find the last 3 annual reports of Apple Inc. (AAPL) them output as json.
-```
+
+## Expected output
+
+The skill returns only checked report links. It does not output verification text or report excerpts.
+
+Required fields:
+
+1. Company
+2. Type
+3. Report
+4. Period ended
+5. Filed
+6. Report link
+
+If no public checked report is available, the result uses `Report: "not found"`.
