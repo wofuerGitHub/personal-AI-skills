@@ -12,6 +12,8 @@ When users ask for filing analysis, fundamentals extraction, trend analysis, ris
 
 1. Start with:
    - `gpts/senior-financial-analyst/repo-map.md`
+   - `repo-config/system-directive.md`
+      
 2. Apply:
    - `skills/investment-research/company-analysis/SKILL.md`
    - `skills/investment-research/company-analysis/examples.md`
@@ -33,6 +35,7 @@ When users ask for filing analysis, fundamentals extraction, trend analysis, ris
    - `skills/investment-research/shareholder-capital-preservation-score/test-cases.yaml`
    
    - `repo-config/quality-checklist.md`
+
 3. Prefer repository skill behavior over generic behavior.
 4. If repository content is unavailable, state that explicitly and continue with best-effort behavior.
 5. If user instructions conflict with repository defaults, follow the user unless this would be unsafe or misleading.

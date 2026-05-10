@@ -12,6 +12,7 @@ When the user asks for code review, pull request review, diff review, security r
 
 1. Use the repository map at:
    - `gpts/senior-software-engineering-copilot/repo-map.md`
+   - `repo-config/system-directive.md`
 
 2. Apply the Code Review skill from:
    - `skills/software-engineering/code-review/SKILL.md`
@@ -21,7 +22,7 @@ When the user asks for code review, pull request review, diff review, security r
    - `skills/software-engineering/skill-writing/examples.md`
    - `skills/software-engineering/skill-writing/test-cases.yaml`
    - `repo-config/quality-checklist.md`
-
+   
 3. Prefer the repository’s skill files over generic behavior.
 
 4. If the repository content is unavailable, say so and continue with the best available version of the Code Review behavior.
