@@ -1,3 +1,110 @@
 skill: company-analysis
 id: skill.investment-research.company-analysis
-version: 0.1.0
+version: 0.2.0
+status: draft
+last_updated: 2026-05-09
+
+principles:
+  - use_provided_sources_only_when_sources_are_provided
+  - latest_annual_report_is_anchor
+  - later_interims_only_bridge_after_latest_annual
+  - earlier_interims_covered_by_newer_annual_are_ignored
+  - one_consolidated_matrix_by_default
+  - periods_as_columns_metrics_as_rows
+  - final_column_quantifies_trend
+  - asterisk_marks_non_12_month_period_flow_values
+  - ratios_and_balance_sheet_as_of_values_are_not_marked_solely_due_to_interim
+  - concise_executive_style
+  - gaap_ifrs_and_non_gaap_apm_are_separated
+
+tests:
+  - id: provided_sources_are_source_locked
+    prompt: Use these exact report links; one link is inaccessible.
+    expected:
+      - uses_only_provided_sources
+      - does_not_search_for_replacements
+      - marks_inaccessible_source_as_not_available
+      - does_not_fill_missing_values_from_memory_or_external_sources
+
+  - id: consolidated_matrix_default
+    prompt: Analyze one company using three annual reports and two quarterly reports.
+    expected:
+      - filing_context_first
+      - one_consolidated_fundamentals_matrix
+      - periods_as_columns
+      - metrics_as_rows
+      - final_column_is_quantified_trend
+      - no_separate_quarterly_table_unless_requested
+
+  - id: latest_annual_supersedes_prior_interims
+    prompt: Provided reports are FY2023 annual, FY2024 annual, FY2025 annual, Q1 2025, Q2 2025, Q3 2025.
+    expected:
+      - uses_FY2025_annual_as_anchor
+      - omits_Q1_Q2_Q3_2025_columns
+      - states_quarterlies_not_used_because_FY2025_annual_is_newer
+      - calculates_FY2023_to_FY2025_CAGR_or_bps_trends
+
+  - id: later_interim_bridges
+    prompt: Provided reports are FY2023 annual, FY2024 annual, FY2025 annual, Q1 2026 interim.
+    expected:
+      - includes_FY2023_FY2024_FY2025_and_Q1_2026_bridge_columns
+      - marks_Q1_period_flow_values_with_asterisk
+      - does_not_mark_Q1_balance_sheet_as_of_values
+      - does_not_mark_Q1_margins_or_ratios
+      - includes_annual_CAGR_and_bridge_change_or_Q1_YoY_in_trend_column
+
+  - id: interim_marker_rules
+    prompt: Include revenue, operating margin, dividends paid, cash, total assets, and equity for annual and H1 periods.
+    expected:
+      - marks_H1_revenue_with_asterisk
+      - marks_H1_dividends_paid_with_asterisk
+      - does_not_mark_H1_operating_margin
+      - does_not_mark_H1_cash
+      - does_not_mark_H1_total_assets
+      - does_not_mark_H1_equity
+      - includes_marker_footnote
+
+  - id: quantified_trend_required
+    prompt: Compare FY2023, FY2024, and FY2025 fundamentals.
+    expected:
+      - trend_column_contains_CAGR_for_amount_metrics_when_possible
+      - trend_column_contains_bps_for_margins_and_ratios
+      - trend_column_uses_not_calculable_with_reason_if_needed
+    must_not:
+      - use_vague_trends_without_numbers
+
+  - id: holding_company_metric_pack
+    prompt: Analyze Investor AB annual reports and latest interim report.
+    expected:
+      - selects_NAV_metric_pack
+      - includes_adjusted_NAV_reported_NAV_NAV_per_share_portfolio_values_net_debt_leverage
+      - labels_APMs
+
+  - id: insurer_metric_pack
+    prompt: Analyze Munich Re annual reports.
+    expected:
+      - selects_insurer_metric_pack
+      - includes_insurance_revenue_technical_result_combined_ratio_investment_result_net_result_ROE
+      - flags_accounting_or_segmentation_comparability_if_disclosed
+
+  - id: conglomerate_insurance_pack
+    prompt: Analyze Berkshire Hathaway annual and latest quarterly filings.
+    expected:
+      - separates_investment_gains_losses_from_operating_revenue
+      - flags_GAAP_net_income_volatility
+      - includes_cash_treasury_bills_equity_securities_when_disclosed
+
+  - id: non_gaap_apm_separation
+    prompt: Include adjusted EBITDA, core operating income, and free cash flow.
+    expected:
+      - labels_non_GAAP_or_APM_metrics
+      - keeps_GAAP_IFRS_and_non_GAAP_APM_separate
+      - labels_derived_values_and_formulas
+
+  - id: multiple_companies_testing_loop
+    prompt: For testing, here are several companies and files. Analyze each separately and ask for a rating after each.
+    expected:
+      - analyzes_one_company_at_a_time
+      - asks_for_0_to_10_score_after_each_company
+      - incorporates_feedback_before_next_company
+      - produces_updated_skill_files_when_requested

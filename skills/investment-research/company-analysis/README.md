@@ -1,33 +1,25 @@
-# Company Analysis Skill
+# Company Analysis Skill v0.2.0
 
-This skill provides tools and guidance for performing **company analysis** as part of investment research.
+Updated files for `skill.investment-research.company-analysis`.
 
-# What it does
+## Files
 
-- Read ccompany reports
-- Gather key financial metrics 
-- Gather qualitative information
-- Extracting fundamentail data
-- Provide results in table or json format
-- Identify trends, outlooks and risks
-- Perform ratio analysis
-- Perform growth assessment
-- Perform competitive positioning
-- Generate concise summaries
-- Generate investment theses
+- `SKILL.md` — updated skill definition.
+- `examples.md` — updated examples.
+- `test-cases.yaml` — updated validation tests.
+- `CHANGELOG.md` — behavior changes from v0.1.0.
 
-## Best inputs
+## Key Changes
 
-Provide one or more of:
-
-- company name
-- International Securities Identification Number (ISIN)
-- ticker
-- one or more links to one or more reports
-- uploaded reports
-
-## Example request
-
-```
-Analyze Apple Inc. (AAPL) last annual report and provide me the output as table.
-```
+- Use only provided sources when sources are supplied.
+- Start output with Filing Context.
+- Use one consolidated fundamentals matrix by default.
+- Put time periods on columns and metrics on rows.
+- Put quantified trend in the final column.
+- Use latest annual report as anchor.
+- Ignore earlier quarterlies once a newer annual report exists.
+- Use later interim reports only as a bridge after the latest annual report.
+- Mark interim / non-12-month period-flow values with `*`.
+- Do not mark ratios or balance-sheet as-of values solely because they are interim.
+- Keep the executive readout compact.
+- End with Risks & Caveats.

@@ -1,366 +1,203 @@
-# Skill: Investment Research – Company Fundamentals from 10-K and 10-Q Reports
+# Skill: Investment Research – Company Fundamentals from Company Reports
 
 ## Metadata
 
 - ID: `skill.investment-research.company-analysis`
-- Version: `0.1.0`
+- Version: `0.2.0`
 - Status: `draft`
 - Owner: `Wolfgang Fuerst`
-- Last updated: `2026-05-02`
+- Last updated: `2026-05-09`
 
 ## Purpose
 
-Extract essential company fundamentals from annual reports (10-K) and quarterly reports (10-Q), normalize reported values into complete numeric amounts, and provide a concise investment-research summary covering key messages, trends, outlook, and risks.
-
-The skill helps users convert SEC-style financial filings into structured tables or JSON that are easier to compare, analyze, and reuse in spreadsheets, databases, dashboards, valuation models, and investment notes.
+Extract, normalize, and summarize company fundamentals from official company reports. The default use case is **one company with multiple files**. For testing only, the user may provide multiple companies; analyze each company separately, ask for a 0–10 score after each, and incorporate feedback before continuing.
 
 ## Use Cases
 
-- Extract fundamentals from a company’s latest 10-K or 10-Q, including revenue, gross profit, operating income, net income, EPS, cash, debt, equity, operating cash flow, capital expenditures, and free cash flow.
-- Convert reported values from millions, billions, or thousands into complete numbers, while preserving the report currency and reporting period.
-- Produce a concise investment-research summary of the filing, including business performance, financial trends, management outlook, and major disclosed risks.
-- Provide a structured table or JSON output for use in financial models, screening tools, or comparative company analysis.
-- Compare fundamentals across multiple periods when the filing includes prior-year or prior-quarter values.
-- Identify inconsistencies, missing values, restatements, non-GAAP measures, or unusual reporting formats that require caution.
+- Extract fundamentals from annual reports, 10-K, 20-F, quarterly/interim reports, 10-Q, and official result releases.
+- Consolidate multiple reports into one trend-first fundamentals matrix.
+- Convert source units into complete numeric values while preserving currency and source precision.
+- Bridge from the latest annual report to the latest available interim period.
+- Quantify trends using CAGR, YoY %, bridge %, or basis-point change.
+- Adapt metrics to business model: operating company, holding company, insurer, conglomerate, industrial, pharmaceutical, retail.
 
 ## Not For
 
-- This skill should not make investment decisions on behalf of the user.
-- This skill should not provide personalized financial advice, buy/sell/hold recommendations, or portfolio allocation guidance.
-- This skill should not invent missing figures or infer precise numbers that are not present in the report.
-- This skill should not treat non-GAAP metrics as GAAP fundamentals unless clearly labeled.
-- This skill should not ignore reporting units, accounting basis, restatements, discontinued operations, or segment changes.
-- This skill should not rely only on management commentary when audited or filed financial statements are available.
-- This skill should not replace human review for high-stakes investment, accounting, legal, tax, or regulatory decisions.
+- Personalized financial advice, buy/sell/hold calls, or portfolio allocation.
+- Inventing missing values.
+- Using substitute sources when the user supplied sources, unless explicitly authorized.
+- Mixing GAAP/IFRS with non-GAAP/APM metrics without labels.
+- Treating interim values as 12-month values.
+- Treating management guidance as guaranteed performance.
 
 ## Inputs
 
-The user may provide:
+The user may provide company names, tickers, report links, uploaded reports, pasted text, fiscal periods, filing dates, preferred metrics, and output-format instructions.
 
-- A 10-K or 10-Q report as a PDF, HTML filing, text extract, SEC link, company investor-relations link, or uploaded document.
-- A company name, ticker symbol, Central Index Key (CIK), fiscal year, fiscal quarter, or filing date.
-- A preferred output format: Markdown table, CSV-style table, JSON, or both table and JSON.
-- A list of requested fundamentals or financial statement line items.
-- A preferred currency or instruction to preserve the filing currency.
-- A request to include period-over-period comparisons, trend commentary, outlook, or risk highlights.
-- A request to distinguish GAAP, non-GAAP, segment, and per-share metrics.
+## Source-Usage Rules
 
-## Output
+### Provided-source mode
 
-The assistant should produce:
+If the user provides report links, uploads, or pasted source text:
 
-- A structured table or JSON object containing extracted fundamentals as complete numbers, not abbreviated values such as “million” or “billion.”
-- The report type, company name, ticker if available, filing date, fiscal period, period end date, currency, reporting units, and source document reference.
-- Clearly labeled values for each extracted metric, including statement source where useful, such as income statement, balance sheet, cash flow statement, notes, MD&A, or segment disclosure.
-- A short summary of the filing’s key messages.
-- A short trend analysis covering revenue, profitability, cash flow, balance sheet, liquidity, and major operating drivers where available.
-- A short outlook section based only on management guidance, forward-looking statements, backlog, demand commentary, or disclosed business conditions.
-- A short risk section summarizing material risks disclosed in the filing.
-- Assumptions, limitations, missing data, and uncertainties.
-- Optional recommendations for follow-up analysis, such as comparing prior periods, reviewing segment data, or validating non-GAAP reconciliations.
+- Use only those provided sources.
+- Do not search for replacement, fallback, or supplemental sources.
+- If a provided source is inaccessible, write `Not available — provided source inaccessible`.
+- Do not fill missing values from other websites, memory, search results, or market-data services.
+- State which provided reports were used and which were not used.
 
-## Instructions
+### Discovery mode
 
-### Role
+If the user does not provide sources:
 
-You are an `investment research and financial filings analyst`.
+- Use official primary sources first: SEC filings, company annual reports, investor-relations reports, or official exchange filings.
+- State the selected source and selection assumption.
 
-### Objective
+## Default Output Order
 
-Help the user `extract, normalize, structure, and summarize company fundamentals from 10-K and 10-Q reports with transparent sourcing, complete numeric values, report dates, currency, trends, outlook, and risks`.
+1. `Filing Context`
+2. `Consolidated Fundamentals Matrix`
+3. `Executive Trend Readout`
+4. `Risks & Caveats`
+5. `Assumptions & Limitations`, only if needed
+6. `Optional JSON Appendix`, only if requested or useful
 
-### Process
+Keep prose compact and executive-style.
 
-1. Clarify the task if needed.
-   - Ask for the report, company, ticker, period, or output format only when the user has not provided enough information to identify the filing or desired output.
-   - If the report is available, proceed without unnecessary clarification.
-   - If multiple filings could match the request, select the most likely filing and state the assumption.
+## Process
 
-2. Identify relevant context.
-   - Determine the company name, ticker, CIK if available, report type, fiscal period, period end date, filing date, currency, and reporting units.
-   - Identify whether the report is annual (10-K) or quarterly (10-Q).
-   - Check whether the filing contains restatements, discontinued operations, segment changes, accounting-policy changes, acquisitions, divestitures, or other comparability issues.
+1. **Clarify only when necessary.** If the report/source set is sufficient, proceed.
+2. **Group inputs by company.** If multiple companies are provided for testing, analyze one company at a time and ask for a 0–10 rating after each.
+3. **Select source set.** In provided-source mode, do not search or substitute sources.
+4. **Determine filing context.** Include company, ticker if available, reports used/not used, period dates, filing/publication dates, report-valid-as-of date, currency, source units, accounting basis, and interim marker.
+5. **Apply annual-anchor rule.**
+   - Use the latest annual report as the main anchor.
+   - If a newer annual report exists, do not show earlier quarterly reports just because they were provided.
+   - Use interim reports only when they are later than the latest annual report and bridge the gap to the latest available period.
+   - Do not annualize interim values unless explicitly requested.
+6. **Build one consolidated fundamentals matrix.**
+   - Time periods are columns.
+   - Metrics are rows.
+   - The final column is `Quantified trend`.
+   - Use chronological annual columns, then the latest bridge column if applicable.
+   - Avoid separate annual and quarterly tables unless requested.
+7. **Use the `*` interim marker correctly.**
+   - `*` = interim / not a 12-month period.
+   - Mark interim income-statement values, cash-flow values, EPS, dividends paid, buybacks, and other period-flow values.
+   - Do **not** mark margins, ratios, percentages, or balance-sheet as-of values solely because they are interim.
+   - Add the footnote: `* = interim / not a 12-month period. Ratios and balance-sheet as-of values are not marked.`
+8. **Normalize values.**
+   - Convert thousands/millions/billions to complete numeric values.
+   - Preserve currency, signs, and source precision.
+   - Keep EPS, percentages, ratios, units, and employee counts in natural units.
+   - Label derived values and formulas.
+   - Use `Not found` when not clearly disclosed.
+9. **Quantify every trend.**
+   - Use CAGR for 3+ annual periods.
+   - Use YoY % for comparable two-period values.
+   - Use bps change for margins, ratios, rates, and combined ratios.
+   - Use bridge change versus latest annual balance-sheet value for point-in-time metrics.
+   - If not calculable, write `Not calculable — <reason>`.
+   - Do not use vague trend-only language without numbers.
+10. **Write executive trend readout.**
+    - Merge summary and trend commentary.
+    - Focus on the few most important quantified signals.
+11. **End with risks and caveats.**
+    - Include material risks, inaccessible sources, restatements, discontinued operations, accounting changes, source precision, non-GAAP/APM caveats, and interim limitations.
 
-3. Locate the primary financial statements.
-   - Consolidated statement of operations or income statement.
-   - Consolidated balance sheet.
-   - Consolidated statement of cash flows.
-   - Consolidated statement of stockholders’ equity if needed.
-   - Notes to the financial statements.
-   - Management’s Discussion and Analysis (MD&A).
-   - Risk factors.
-   - Outlook, guidance, backlog, liquidity, capital resources, and subsequent events sections where available.
+## Metric Packs
 
-4. Extract core fundamentals.
-   - Revenue or net sales.
-   - Gross profit and gross margin, if available or calculable.
-   - Operating income or loss.
-   - Net income or loss attributable to the company.
-   - Diluted and basic earnings per share, if available.
-   - Weighted-average shares outstanding, if available.
-   - Cash and cash equivalents.
-   - Short-term investments, if relevant.
-   - Total assets.
-   - Current assets and current liabilities.
-   - Total debt, including short-term debt, long-term debt, finance leases, or borrowings where disclosed.
-   - Total liabilities.
-   - Total shareholders’ equity.
-   - Operating cash flow.
-   - Capital expenditures.
-   - Free cash flow, if requested or if calculable as operating cash flow minus capital expenditures.
-   - Dividends, share repurchases, or stock-based compensation where relevant.
-   - Segment revenue and segment operating income where material and available.
+### Standard Operating Company
 
-5. Normalize all numeric values.
-   - Convert figures reported in thousands, millions, or billions into complete numbers.
-   - Preserve signs for losses, cash outflows, liabilities, and negative equity.
-   - Do not round unless the source itself is rounded.
-   - Do not convert currency unless explicitly requested.
-   - Always report the original currency.
-   - Always report the original reporting unit used in the filing.
-   - When a number is derived, label it as derived and show the formula.
-   - When a value cannot be found, use `null` in JSON or `Not found` in tables, and state the limitation.
+Revenue, gross profit/margin, operating income/margin, net income, diluted EPS, operating cash flow, capex, free cash flow, cash/equivalents, marketable securities if material, total assets, debt, liabilities, equity, dividends, repurchases.
 
-6. Validate extracted values.
-   - Cross-check totals and subtotals where practical.
-   - Confirm whether values are for three months, six months, nine months, full fiscal year, or a point-in-time balance sheet date.
-   - Ensure income statement and cash flow values are period-based.
-   - Ensure balance sheet values are as-of-date values.
-   - Avoid mixing fiscal periods unless clearly labeled.
-   - Distinguish current-period values from comparative prior-period values.
+### Investment Holding Company / NAV
 
-7. Separate facts, assumptions, and recommendations.
-   - Facts must come from the report.
-   - Assumptions must be explicitly labeled.
-   - Recommendations must be limited to analytical next steps, not investment advice.
+Adjusted NAV, reported NAV, NAV/share, total adjusted assets, portfolio values by bucket, listed/private/fund holdings, gross cash, gross debt, net debt, leverage, dividends received, management cost/ratio, total shareholder return, dividend/share.
 
-8. Produce the requested output in a clear structure.
-   - Use a table when the user wants readability.
-   - Use JSON when the user wants machine-readable data.
-   - Use both when useful or requested.
-   - Include report validity date, filing date, fiscal period, and currency in every output.
+### Conglomerate / Insurance-Heavy
 
-### Constraints
+Total revenue excluding investment gains when appropriate, investment gains/losses separately, operating earnings if disclosed, underwriting result, float if disclosed, segment earnings, cash, Treasury bills, equity securities, operating cash flow, capex, assets, liabilities, equity, repurchases.
 
-- Be explicit about uncertainty.
-- Do not invent facts.
-- Ask for missing context only when necessary.
-- Prefer structured outputs.
-- Mention risks, tradeoffs, or limitations when relevant.
-- Always provide the date when the report is valid.
-- Always provide the filing date when available.
-- Always provide the currency.
-- Always convert reported units into complete numbers.
-- Do not write values such as `$12.3 million` in the extracted fundamentals table or JSON; write `12300000` and include currency separately.
-- Do not silently mix GAAP and non-GAAP metrics.
-- Do not treat management guidance as guaranteed future performance.
-- Do not provide personalized financial advice.
-- Do not make buy, sell, or hold recommendations unless the user explicitly asks for general educational framing, and even then include appropriate limitations.
-- When using external sources, prefer the official SEC filing, company investor-relations filing, or company annual report.
+### Insurer / Reinsurer
+
+Insurance revenue, technical result, claims, acquisition/admin costs, combined ratio, investment result, operating result, net result, EPS, ROE, ROI, investments, insurance contract balances, equity, solvency ratio if disclosed, dividend/share, segment results.
+
+### Industrial Equipment / Engineering
+
+Order intake, order backlog, book-to-bill, revenue, EBITDA/margin, EBITA/margin, comparable EBITA/margin, EBIT/margin, net income, EPS, operating cash flow, capex, free cash flow, liquid funds, net liquidity/debt, equity ratio, employees.
+
+### Pharmaceutical
+
+Net sales from continuing operations, gross profit/margin, R&D expense, R&D as % of sales, operating income/margin, net income continuing operations, diluted EPS, core operating income/margin labeled Non-IFRS/non-GAAP, operating cash flow, free cash flow, liquidity, financial debt, net debt, assets, liabilities, equity, dividends, treasury share purchases.
+
+### Retail
+
+Sales, comparable sales, gross margin, SG&A ratio, operating income/margin, net earnings, diluted EPS, operating cash flow, capex, free cash flow, inventory, cash, debt/lease liabilities, assets, liabilities, equity, dividends, repurchases, store count or square footage if disclosed.
 
 ## Default Output Format
 
 ```md
-## Summary
+## Filing Context
 
-- Company:
-- Ticker:
-- Report type:
-- Fiscal period:
-- Period end date:
-- Filing date:
-- Report valid as of:
-- Currency:
-- Reporting units in source:
-- Output unit: Complete numeric values
+| Field | Value |
+|---|---|
+| Company |  |
+| Ticker |  |
+| Reports used |  |
+| Reports not used |  |
+| Latest annual period |  |
+| Latest bridge period |  |
+| Report-valid-as-of date |  |
+| Currency |  |
+| Source reporting units |  |
+| Output unit | Complete numeric values; EPS, percentages, ratios, units, and counts kept in natural units |
+| Accounting basis |  |
+| Interim marker | `*` = interim / not a 12-month period. Ratios and balance-sheet as-of values are not marked. |
 
-## Fundamentals
+## Consolidated Fundamentals Matrix
 
-| Metric | Value | Currency | Period / As-of Date | Source Section | Notes |
-|---|---:|---|---|---|---|
-| Revenue |  |  |  |  |  |
-| Gross profit |  |  |  |  |  |
-| Operating income |  |  |  |  |  |
-| Net income attributable to company |  |  |  |  |  |
-| Diluted EPS |  |  |  |  |  |
-| Cash and cash equivalents |  |  |  |  |  |
-| Total assets |  |  |  |  |  |
-| Total debt |  |  |  |  |  |
-| Total liabilities |  |  |  |  |  |
-| Shareholders’ equity |  |  |  |  |  |
-| Operating cash flow |  |  |  |  |  |
-| Capital expenditures |  |  |  |  |  |
-| Free cash flow |  |  |  |  | Derived if not directly reported |
+| Metric | FY20XX / <date> | FY20XX / <date> | FY20XX / <date> | Latest bridge: <period> / <date> | Quantified trend |
+|---|---:|---:|---:|---:|---|
+| Revenue / net sales |  |  |  |  | CAGR / YoY / bridge change |
+| Gross margin |  |  |  |  | bps change |
+| Operating income |  |  |  |  | CAGR / YoY / bridge change |
+| Net income |  |  |  |  | CAGR / YoY / bridge change |
+| Operating cash flow |  |  |  |  | CAGR / YoY / bridge change |
+| Capex |  |  |  |  | CAGR / YoY / bridge change |
+| Free cash flow |  |  |  |  | CAGR / YoY / bridge change |
+| Cash and equivalents |  |  |  |  | CAGR / latest bridge change |
+| Total debt |  |  |  |  | CAGR / latest bridge change |
+| Equity |  |  |  |  | CAGR / latest bridge change |
 
-## JSON
+## Executive Trend Readout
 
-```json
-{
-  "company": "",
-  "ticker": "",
-  "report_type": "",
-  "fiscal_period": "",
-  "period_end_date": "",
-  "filing_date": "",
-  "report_valid_as_of": "",
-  "currency": "",
-  "source_reporting_units": "",
-  "output_unit": "complete_numeric_values",
-  "fundamentals": {
-    "revenue": {
-      "value": null,
-      "currency": "",
-      "period": "",
-      "source_section": "",
-      "notes": ""
-    },
-    "gross_profit": {
-      "value": null,
-      "currency": "",
-      "period": "",
-      "source_section": "",
-      "notes": ""
-    },
-    "operating_income": {
-      "value": null,
-      "currency": "",
-      "period": "",
-      "source_section": "",
-      "notes": ""
-    },
-    "net_income_attributable_to_company": {
-      "value": null,
-      "currency": "",
-      "period": "",
-      "source_section": "",
-      "notes": ""
-    },
-    "diluted_eps": {
-      "value": null,
-      "currency": "",
-      "period": "",
-      "source_section": "",
-      "notes": ""
-    },
-    "cash_and_cash_equivalents": {
-      "value": null,
-      "currency": "",
-      "as_of_date": "",
-      "source_section": "",
-      "notes": ""
-    },
-    "total_assets": {
-      "value": null,
-      "currency": "",
-      "as_of_date": "",
-      "source_section": "",
-      "notes": ""
-    },
-    "total_debt": {
-      "value": null,
-      "currency": "",
-      "as_of_date": "",
-      "source_section": "",
-      "notes": ""
-    },
-    "total_liabilities": {
-      "value": null,
-      "currency": "",
-      "as_of_date": "",
-      "source_section": "",
-      "notes": ""
-    },
-    "shareholders_equity": {
-      "value": null,
-      "currency": "",
-      "as_of_date": "",
-      "source_section": "",
-      "notes": ""
-    },
-    "operating_cash_flow": {
-      "value": null,
-      "currency": "",
-      "period": "",
-      "source_section": "",
-      "notes": ""
-    },
-    "capital_expenditures": {
-      "value": null,
-      "currency": "",
-      "period": "",
-      "source_section": "",
-      "notes": ""
-    },
-    "free_cash_flow": {
-      "value": null,
-      "currency": "",
-      "period": "",
-      "source_section": "",
-      "formula": "operating_cash_flow - capital_expenditures",
-      "derived": true,
-      "notes": ""
-    }
-  }
-}
+- <Quantified finding>
+- <Quantified finding>
+- <Quantified bridge finding, if applicable>
+
+## Risks & Caveats
+
+- <Risk or caveat>
+- <Comparability caveat>
+- <Source-access or missing-data caveat>
 ```
-
-## Analysis
-
-### Key messages
-
-- 
-- 
-- 
-
-### Trends
-
-- Revenue:
-- Profitability:
-- Cash flow:
-- Balance sheet and liquidity:
-- Segments or operating drivers:
-
-### Outlook
-
-- 
-- 
-- 
-
-### Risks
-
-- 
-- 
-- 
-
-## Recommendation / Output
-
-- The extracted fundamentals above are normalized into complete numeric values.
-- Use these values as a starting point for further financial analysis.
-- Review footnotes, non-GAAP reconciliations, debt schedules, and segment disclosures before making investment decisions.
-
-## Assumptions
-
-- 
-- 
-- 
-
-## Open Questions
-
-- 
-- 
-- 
 
 ## Quality Checklist
 
-Before finalizing the response, verify:
-
-- The filing type is identified as 10-K or 10-Q.
-- The company, ticker, fiscal period, period end date, filing date, report valid date, currency, and reporting units are included.
-- All extracted fundamentals are complete numbers, not abbreviated values.
-- Balance sheet values have an as-of date.
-- Income statement and cash flow values have a period.
-- Derived values are clearly labeled with formulas.
-- Missing values are explicitly marked.
-- GAAP and non-GAAP values are not mixed without labeling.
-- Key messages, trends, outlook, and risks are summarized separately.
-- Uncertainty and assumptions are clearly stated.
+- [ ] Provided-source mode respected.
+- [ ] Filing Context first.
+- [ ] One consolidated matrix by default.
+- [ ] Time periods are columns.
+- [ ] Metrics are rows.
+- [ ] Final column is quantified trend.
+- [ ] Latest annual report is anchor.
+- [ ] Earlier interims ignored when covered by newer annual report.
+- [ ] Later interims used only as bridge.
+- [ ] `*` used only for non-12-month period-flow values.
+- [ ] Ratios and balance-sheet as-of values not marked solely due to interim source.
+- [ ] Complete numeric values used.
+- [ ] Currency and source units disclosed.
+- [ ] GAAP/IFRS and non-GAAP/APM separated.
+- [ ] Derived values labeled.
+- [ ] Risks & Caveats at end.
