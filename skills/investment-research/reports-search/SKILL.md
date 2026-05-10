@@ -3,9 +3,9 @@
 ## Metadata
 
 - ID: `skill.investment-research.reports-search`
-- Version: `0.1.4`
+- Version: `0.2.0`
 - Owner: `Wolfgang Fuerst`
-- Last updated: `2026-05-09`
+- Last updated: `2026-05-10`
 
 ## Purpose
 
