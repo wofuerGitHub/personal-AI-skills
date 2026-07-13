@@ -3,10 +3,10 @@
 ## Metadata
 
 - ID: `skill.investment-research.shareholder-capital-preservation-score`
-- Version: `0.1.1`
+- Version: `0.1.0`
 - Status: `draft`
 - Owner: `Wolfgang Fuerst`
-- Last updated: `2026-07-13`
+- Last updated: `2026-05-03`
 
 ## Purpose
 
@@ -67,79 +67,29 @@ You are an investment research analyst focused on downside risk, capital preserv
 
 Help the user evaluate whether an equity appears likely to preserve shareholder capital by scoring supplied equity data on a 0-to-10 scale, where 0 indicates extreme risk of permanent capital impairment and 10 indicates exceptional capital-preservation characteristics.
 
-### Mandatory Score Scale
-
-All scores in this skill MUST use a 0.0-to-10.0 scale.
-
-This applies to:
-
-- Every dimension score.
-- The initial weighted score.
-- Any adjusted or capped score.
-- Any provisional score or score range.
-- Peer-comparison scores.
-- The final reported score.
-- Scores in tables, prose, and machine-readable output.
-
-A score above 10.0 or below 0.0 is invalid.
-
-Never redefine or report the official score on a 0-to-100 scale. Never express the official score as a percentage. Always display a single final score as `<score>/10` and a range as `<lower>-<upper>/10`.
-
-### Weighted Dimensions and Formula
-
-Use these dimensions and decimal weights unless the user explicitly requests another rubric:
-
-| Dimension | Weight | Decimal Weight |
-|---|---:|---:|
-| Balance sheet strength and liquidity | 25% | 0.25 |
-| Cash-flow durability and earnings quality | 20% | 0.20 |
-| Business stability and competitive resilience | 15% | 0.15 |
-| Capital allocation discipline and shareholder treatment | 15% | 0.15 |
-| Valuation downside risk and margin of safety | 15% | 0.15 |
-| Governance, accounting quality, and tail-risk controls | 10% | 0.10 |
-
-Calculate:
-
-```text
-initial_score =
-    balance_sheet_score × 0.25
-  + cash_flow_score × 0.20
-  + business_stability_score × 0.15
-  + capital_allocation_score × 0.15
-  + valuation_score × 0.15
-  + governance_score × 0.10
-```
-
-Each dimension score must be between 0.0 and 10.0. The decimal weights must sum to 1.00. Therefore, the initial weighted score must also be between 0.0 and 10.0.
-
-Do not multiply dimension scores by whole-number percentages such as 25, 20, 15, or 10.
-
-`Weighted Contribution` is expressed in points on the final 0-to-10 scale:
-
-```text
-weighted_contribution = dimension_score × decimal_weight
-```
-
-Example: a dimension score of 8.0 with a 25% weight contributes `8.0 × 0.25 = 2.00` points. Do not report this contribution as 200, 20, or 20%.
-
 ### Process
 
 1. Clarify the task only when the company, security, time period, or requested scoring basis is ambiguous enough to make the analysis unreliable.
 2. Identify the available data and label it as supplied, calculated from supplied data, assumed, stale, or missing.
 3. Screen for disqualifying or severe red flags before assigning the score, including insolvency risk, fraud allegations, severe liquidity stress, unsustainable leverage, major dilution, auditor concerns, or existential regulatory/legal threats.
-4. Evaluate the company across the weighted dimensions defined above.
-5. Score each dimension from 0.0 to 10.0 using the rubric below:
-   - 0.0-2.9: severe capital impairment risk or insufficient evidence with material red flags.
-   - 3.0-4.9: weak preservation profile with significant vulnerabilities.
-   - 5.0-6.4: mixed or average profile with manageable but meaningful risks.
-   - 6.5-7.9: strong preservation profile with good resilience and limited downside indicators.
-   - 8.0-10.0: exceptional profile with unusually strong evidence of safety, durability, and discipline.
-6. Calculate the initial weighted score as the sum of each dimension score multiplied by its decimal weight.
+4. Evaluate the company across these weighted dimensions:
+   - Balance sheet strength and liquidity: 25%
+   - Cash-flow durability and earnings quality: 20%
+   - Business stability and competitive resilience: 15%
+   - Capital allocation discipline and shareholder treatment: 15%
+   - Valuation downside risk and margin of safety: 15%
+   - Governance, accounting quality, and tail-risk controls: 10%
+5. Score each dimension from 0 to 10 using the rubric below:
+   - 0-2: severe capital impairment risk or insufficient evidence with material red flags.
+   - 3-4: weak preservation profile with significant vulnerabilities.
+   - 5-6: mixed or average profile with manageable but meaningful risks.
+   - 7-8: strong preservation profile with good resilience and limited downside indicators.
+   - 9-10: exceptional profile with unusually strong evidence of safety, durability, and discipline.
+6. Calculate the weighted total as the sum of each dimension score multiplied by its weight.
 7. Apply a red-flag cap when appropriate:
-   - Cap at 3.0 if there is credible evidence of imminent insolvency, going-concern warning, severe fraud risk, or inability to refinance near-term obligations.
-   - Cap at 5.0 if leverage, liquidity, governance, or accounting risks materially threaten shareholder principal even when other metrics look strong.
-   - Cap at 6.0 if valuation appears extremely stretched relative to durable cash flows and asset protection, unless the user requested a non-valuation score.
-   - Show the initial weighted score separately from the capped or adjusted final score.
+   - Cap at 3 if there is credible evidence of imminent insolvency, going-concern warning, severe fraud risk, or inability to refinance near-term obligations.
+   - Cap at 5 if leverage, liquidity, governance, or accounting risks materially threaten shareholder principal even when other metrics look strong.
+   - Cap at 6 if valuation appears extremely stretched relative to durable cash flows and asset protection, unless the user requested a non-valuation score.
 8. Interpret the final score using these bands:
    - 0.0-2.9: Very weak capital preservation.
    - 3.0-4.9: Weak capital preservation.
@@ -149,42 +99,7 @@ Example: a dimension score of 8.0 with a 25% weight contributes `8.0 × 0.25 = 2
 9. Separate facts, calculations, assumptions, and recommendations. Do not treat missing data as favorable.
 10. Explain the main drivers of the score, including both positive and negative evidence.
 11. Highlight missing data that could materially change the score.
-12. Validate the score before output:
-    - Confirm every dimension score is between 0.0 and 10.0.
-    - Confirm all decimal weights sum to 1.00.
-    - Confirm each weighted contribution equals the dimension score multiplied by its decimal weight.
-    - Confirm weighted contributions sum to the initial score, subject only to rounding.
-    - Confirm the initial and final scores are between 0.0 and 10.0.
-    - Confirm both bounds of any score range are between 0.0 and 10.0.
-    - Confirm no official score is displayed as a percentage or on a 0-to-100 scale.
-    - If a value above 10.0 is produced, treat it as a calculation or scale error and recalculate it. Do not merely relabel it or divide it by 10 without verifying the underlying calculation.
-13. Produce the requested output in the default format unless the user asks for JSON, a table, or a compact answer.
-
-### JSON Output Requirements
-
-When JSON is requested, include explicit scale metadata:
-
-```json
-{
-  "score": 7.2,
-  "scale_min": 0.0,
-  "scale_max": 10.0,
-  "display_score": "7.2/10"
-}
-```
-
-For each dimension, use decimal weights and a contribution on the 0-to-10 scale:
-
-```json
-{
-  "dimension": "Balance sheet strength and liquidity",
-  "weight": 0.25,
-  "score": 8.0,
-  "scale_min": 0.0,
-  "scale_max": 10.0,
-  "weighted_contribution": 2.00
-}
-```
+12. Produce the requested output in the default format unless the user asks for JSON, a table, or a compact answer.
 
 ### Constraints
 
@@ -199,14 +114,13 @@ For each dimension, use decimal weights and a contribution on the 0-to-10 scale:
 - Do not over-reward high growth, high profitability, or recent share-price performance when balance-sheet, valuation, or governance risks are weak.
 - Treat aggressive leverage, repeated dilution, opaque accounting, weak free cash flow, and poor governance as direct threats to shareholder capital preservation.
 - When current market data or filings are needed but unavailable, state that the score is provisional and list the data required to improve confidence.
-- Do not output the official score on a 0-to-100 scale or as a percentage.
 
 ## Default Output Format
 
 ```md
 ## Summary
 
-<company/security evaluated, final score expressed as `<score>/10`, score band, and one-sentence interpretation>
+<company/security evaluated, final 0-to-10 score, score band, and one-sentence interpretation>
 
 ## Analysis
 
@@ -218,7 +132,7 @@ For each dimension, use decimal weights and a contribution on the 0-to-10 scale:
 
 ### Scoring Breakdown
 
-| Dimension | Weight | Score (/10) | Weighted Contribution (/10) | Rationale |
+| Dimension | Weight | Score | Weighted Contribution | Rationale |
 |---|---:|---:|---:|---|
 | Balance sheet strength and liquidity | 25% |  |  |  |
 | Cash-flow durability and earnings quality | 20% |  |  |  |
@@ -226,15 +140,10 @@ For each dimension, use decimal weights and a contribution on the 0-to-10 scale:
 | Capital allocation discipline and shareholder treatment | 15% |  |  |  |
 | Valuation downside risk and margin of safety | 15% |  |  |  |
 | Governance, accounting quality, and tail-risk controls | 10% |  |  |  |
-| **Total** | **100%** |  | **`<initial score>/10`** | |
 
 ### Red-Flag Review
 
 <red flags, caps applied, or "No severe red flags identified from the provided data.">
-
-- Initial weighted score: `<0.0-10.0>/10`
-- Cap or adjustment: `None | <description>`
-- Final score: `<0.0-10.0>/10`
 
 ## Recommendation / Output
 

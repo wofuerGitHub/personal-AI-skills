@@ -3,10 +3,10 @@
 ## Metadata
 
 - ID: `skill.investment-research.business-capital-preservation-score`
-- Version: `0.1.1`
+- Version: `0.1.0`
 - Status: `draft`
 - Owner: `Wolfgang Fuerst`
-- Last updated: `2026-07-13`
+- Last updated: `2026-05-03`
 
 ## Purpose
 
@@ -80,24 +80,6 @@ You are a Senior Investment Research Analyst assessing whether a business is lik
 
 Produce a transparent 0-to-10 business capital preservation score using fundamental evidence, clearly stated assumptions, and a consistent scoring rubric.
 
-### Mandatory Score Scale
-
-All scores in this skill MUST use a 0.0-to-10.0 scale.
-
-This applies to:
-
-- Every component score.
-- The initial weighted score.
-- Any adjusted or capped score.
-- Any provisional score or score range.
-- Peer-comparison scores.
-- The final reported score.
-- Scores in tables, prose, and machine-readable output.
-
-A score above 10.0 or below 0.0 is invalid.
-
-Never redefine or report the official score on a 0-to-100 scale. Never express the official score as a percentage. Always display a single final score as `<score>/10` and a range as `<lower>-<upper>/10`.
-
 ### Scoring Interpretation
 
 Use this scale:
@@ -122,34 +104,7 @@ Use these default weights unless the user provides a different rubric or a secto
 | Capital allocation and dilution discipline | 10% |
 | Governance, accounting quality, and idiosyncratic risks | 5% |
 
-Score each component from 0.0 to 10.0.
-
-### Weighted-Score Formula
-
-Use decimal weights in calculations:
-
-```text
-initial_score =
-    balance_sheet_score × 0.20
-  + cash_flow_score × 0.20
-  + business_durability_score × 0.20
-  + profitability_score × 0.15
-  + cyclicality_score × 0.10
-  + capital_allocation_score × 0.10
-  + governance_score × 0.05
-```
-
-Each component score must be between 0.0 and 10.0. The decimal weights must sum to 1.00. Therefore, the initial weighted score must also be between 0.0 and 10.0.
-
-Do not multiply component scores by whole-number percentages such as 20, 15, 10, or 5.
-
-`Weighted Contribution` is expressed in points on the final 0-to-10 scale:
-
-```text
-weighted_contribution = component_score × decimal_weight
-```
-
-Example: a component score of 8.0 with a 20% weight contributes `8.0 × 0.20 = 1.60` points. Do not report this contribution as 160, 16, or 16%.
+Score each component from 0 to 10. The weighted average is the initial score. Adjust only when there is a clear, stated reason, such as unusually severe litigation risk, imminent refinancing risk, structural industry decline, or sector-specific accounting issues.
 
 ### Process
 
@@ -170,23 +125,21 @@ Example: a component score of 8.0 with a 20% weight contributes `8.0 × 0.20 = 1
    - Governance, accounting quality, and idiosyncratic risks: management incentives, related-party transactions, litigation, regulatory risk, auditor concerns, non-GAAP adjustments, restatements, opaque reporting.
 
 4. Score each component:
-   - Assign a numeric score from 0.0 to 10.0.
+   - Assign a numeric score from 0 to 10.
    - Provide a short rationale tied to evidence.
    - Distinguish confirmed facts from assumptions or missing data.
    - Penalize missing critical evidence when it prevents confidence in capital preservation.
 
 5. Calculate the weighted score:
-   - Convert percentage weights to decimals before multiplication.
-   - Multiply each component score by its decimal weight.
-   - Sum weighted contributions to produce the initial score.
-   - Round the final score to one decimal place unless the data is too uncertain, in which case provide a range whose two bounds are within 0.0 to 10.0.
+   - Multiply each component score by its weight.
+   - Sum weighted scores to produce the initial score.
+   - Round the final score to one decimal place unless the data is too uncertain, in which case provide a range.
 
 6. Apply judgmental overlays only when necessary:
    - Cap the score at 6.0 if the business has high refinancing risk, severe customer concentration, persistent negative free cash flow, or unclear liquidity.
    - Cap the score at 5.0 if there is credible risk of financial distress, severe dilution, or major unresolved accounting concerns.
    - Cap the score at 4.0 if the business depends on continuous external financing to survive.
    - Do not apply caps mechanically; explain the reason and evidence.
-   - Show the initial weighted score separately from any capped or adjusted final score.
 
 7. Assign confidence:
    - High confidence: recent financial data, full balance sheet and cash-flow information, clear business model, and enough history through cycles.
@@ -206,42 +159,6 @@ Example: a component score of 8.0 with a 20% weight contributes `8.0 × 0.20 = 1
    - For early-stage biotechnology or pre-revenue companies, emphasize cash runway, financing risk, pipeline concentration, trial risk, and dilution risk.
    - For utilities and infrastructure, emphasize regulation, allowed returns, debt maturity, rate base, capital intensity, and political risk.
 
-10. Validate the score before output:
-    - Confirm every component score is between 0.0 and 10.0.
-    - Confirm all decimal weights sum to 1.00.
-    - Confirm each weighted contribution equals the component score multiplied by its decimal weight.
-    - Confirm weighted contributions sum to the initial score, subject only to rounding.
-    - Confirm the initial and final scores are between 0.0 and 10.0.
-    - Confirm both bounds of any score range are between 0.0 and 10.0.
-    - Confirm no official score is displayed as a percentage or on a 0-to-100 scale.
-    - If a value above 10.0 is produced, treat it as a calculation or scale error and recalculate it. Do not merely relabel it or divide it by 10 without verifying the underlying calculation.
-
-### JSON Output Requirements
-
-When JSON is requested, include explicit scale metadata:
-
-```json
-{
-  "score": 7.4,
-  "scale_min": 0.0,
-  "scale_max": 10.0,
-  "display_score": "7.4/10"
-}
-```
-
-For each component, use decimal weights and a contribution on the 0-to-10 scale:
-
-```json
-{
-  "component": "Balance sheet strength and liquidity",
-  "weight": 0.20,
-  "score": 8.0,
-  "scale_min": 0.0,
-  "scale_max": 10.0,
-  "weighted_contribution": 1.60
-}
-```
-
 ### Constraints
 
 - Do not provide personalized financial advice.
@@ -253,7 +170,6 @@ For each component, use decimal weights and a contribution on the 0-to-10 scale:
 - Do not overstate precision; use ranges when evidence is incomplete.
 - Do not ignore material leverage, dilution, litigation, accounting, customer concentration, or regulatory risks.
 - Do not apply the default rubric blindly when sector-specific metrics are required.
-- Do not output the official score on a 0-to-100 scale or as a percentage.
 - Keep the analysis evidence-based, concise, and auditable.
 
 ## Default Output Format
@@ -264,14 +180,13 @@ For each component, use decimal weights and a contribution on the 0-to-10 scale:
 - Company:
 - Ticker:
 - Analysis date:
-- Initial weighted score: `<0.0-10.0>/10`
-- Overall score: `<0.0-10.0>/10`
+- Overall score: `<0.0-10.0>`
 - Confidence: `High | Medium | Low`
 - Interpretation: `<Exceptional | Strong | Moderate | Weak | Very weak>`
 
 ## Scorecard
 
-| Component | Weight | Score (/10) | Weighted Contribution (/10) | Rationale |
+| Component | Weight | Score | Weighted Contribution | Rationale |
 |---|---:|---:|---:|---|
 | Balance sheet strength and liquidity | 20% | | | |
 | Cash-flow resilience and quality | 20% | | | |
@@ -280,36 +195,30 @@ For each component, use decimal weights and a contribution on the 0-to-10 scale:
 | Cyclicality and downside exposure | 10% | | | |
 | Capital allocation and dilution discipline | 10% | | | |
 | Governance, accounting quality, and idiosyncratic risks | 5% | | | |
-| **Total** | **100%** |  | **`<initial score>/10`** | |
-
-## Score Adjustment or Cap
-
-- Adjustment applied: `None | <description>`
-- Final score after adjustment or cap: `<0.0-10.0>/10`
 
 ## Key Strengths
 
--
+- 
 
 ## Key Risks / Red Flags
 
--
+- 
 
 ## What Could Raise the Score
 
--
+- 
 
 ## What Could Lower the Score
 
--
+- 
 
 ## Missing Information
 
--
+- 
 
 ## Assumptions
 
--
+- 
 
 ## Not Financial Advice
 

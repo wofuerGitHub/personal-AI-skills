@@ -1,6 +1,6 @@
 skill: business-capital-preservation-score
 skill_id: skill.investment-research.business-capital-preservation-score
-version: 0.1.1
+version: 0.1.0
 
 test_cases:
   - name: scores_complete_input_with_weighted_rubric
@@ -11,83 +11,12 @@ test_cases:
       the top customer is 8% of revenue, recession sensitivity is moderate, share count
       declined 1% annually over five years, and no major governance issues are known.
     expected_behavior:
-      - Produces an overall score from 0.0 to 10.0 and displays it as `<score>/10`.
+      - Produces an overall score from 0 to 10.
       - Uses the default weighted scorecard or clearly explains any adjustment.
       - Provides component scores and rationales.
       - Identifies strengths such as low leverage, high interest coverage, resilient FCF, recurring revenue, and strong ROIC.
       - Notes remaining risks and missing information.
       - Includes confidence level and a non-personalized-investment-advice disclaimer.
-      - Does not report the official score on a 0-to-100 scale or as a percentage.
-
-  - name: enforces_zero_to_ten_scale_in_weighted_calculation
-    input: |
-      Calculate the Business Capital Preservation Score using a component score
-      of 8 out of 10 for every category and the default weights.
-    expected_behavior:
-      - Produces an initial and final score of 8.0 out of 10.
-      - Displays the score as `8.0/10`.
-      - Does not produce 80, 80 out of 100, 800, or 8.0 out of 100.
-      - Uses decimal weights whose sum is 1.00.
-      - Keeps every component score and weighted contribution on the 0-to-10 scale.
-
-  - name: calculates_exact_business_weighted_score
-    input: |
-      Calculate the Business Capital Preservation Score using these component scores:
-      Balance sheet strength and liquidity: 8
-      Cash-flow resilience and quality: 7
-      Business durability and competitive position: 9
-      Profitability and returns on capital: 6
-      Cyclicality and downside exposure: 5
-      Capital allocation and dilution discipline: 8
-      Governance, accounting quality, and idiosyncratic risks: 7
-      Do not apply an overlay or cap.
-    expected_behavior:
-      - Calculates the unrounded initial score as 7.35.
-      - Displays the rounded final score as `7.4/10`.
-      - Calculates weighted contributions using decimal weights.
-      - Weighted contributions reconcile to 7.35 before final rounding.
-      - Does not report 73.5, 73.5 out of 100, or 7.35 percent.
-
-  - name: weighted_contributions_reconcile_to_final_score
-    input: |
-      Produce a full Business Capital Preservation Score scorecard using the
-      default rubric and show the arithmetic.
-    expected_behavior:
-      - Calculates each weighted contribution as component score multiplied by decimal weight.
-      - Labels component scores as `/10`.
-      - Labels weighted contributions as points on the final 0-to-10 scale.
-      - Weighted contributions sum to the initial score, subject only to rounding.
-      - Shows any overlay or cap separately from the initial weighted score.
-      - Keeps the initial and final scores between 0.0 and 10.0.
-
-  - name: does_not_switch_to_zero_to_one_hundred_scale
-    input: |
-      Give me the Business Capital Preservation Score as a percentage out of 100.
-    expected_behavior:
-      - Retains the canonical score on a 0-to-10 scale.
-      - Reports the official score using the format `<score>/10`.
-      - Does not redefine the official score as a percentage or a 0-to-100 score.
-      - Does not use a 0-to-100 value in score bands, caps, peer comparisons, or JSON.
-
-  - name: keeps_uncertain_score_ranges_within_zero_to_ten
-    input: |
-      The available data is incomplete. Provide a low-confidence Business Capital
-      Preservation Score range.
-    expected_behavior:
-      - Expresses both range bounds on the 0-to-10 scale.
-      - Does not produce a range whose lower bound is below 0.0 or upper bound is above 10.0.
-      - Uses a format such as `4.0-5.5/10`.
-      - Does not express the official range as a percentage or on a 0-to-100 scale.
-
-  - name: emits_unambiguous_json_scale_metadata
-    input: |
-      Return the Business Capital Preservation Score as JSON.
-    expected_behavior:
-      - Includes numeric `score`, `scale_min`, and `scale_max` fields.
-      - Uses `scale_min: 0.0` and `scale_max: 10.0`.
-      - Includes a `display_score` formatted as `<score>/10`.
-      - Uses decimal component weights between 0 and 1.
-      - Keeps each component score and the final score between 0.0 and 10.0.
 
   - name: does_not_invent_company_specific_data
     input: |
@@ -114,8 +43,6 @@ test_cases:
       - Produces a weak or very weak score unless strong mitigating evidence is provided.
       - Explains refinancing, liquidity, leverage, and cash-flow risks.
       - Considers applying a score cap and explains the rationale.
-      - Shows the initial weighted score separately from the capped final score.
-      - Keeps all scores and caps within 0.0 to 10.0.
       - Does not overstate precision.
 
   - name: distinguishes_capital_preservation_from_valuation
@@ -158,7 +85,6 @@ test_cases:
       Compare capital preservation scores for three companies using the metrics below...
     expected_behavior:
       - Scores each company using a consistent rubric.
-      - Expresses every peer score on the 0-to-10 scale.
       - Explains the key differences between companies.
       - Notes comparability limitations when data quality, sectors, or accounting policies differ.
 
@@ -170,5 +96,4 @@ test_cases:
       - Uses a sector-specific caveat for early-stage biotech.
       - Emphasizes cash runway, trial risk, pipeline concentration, and dilution risk.
       - Provides a range or low-confidence score rather than false precision.
-      - Keeps both range bounds within 0.0 to 10.0.
       - Does not apply the industrial-company rubric blindly.

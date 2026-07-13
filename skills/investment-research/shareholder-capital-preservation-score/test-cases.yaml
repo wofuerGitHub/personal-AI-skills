@@ -1,6 +1,6 @@
 skill: shareholder-capital-preservation-score
 skill_id: skill.investment-research.shareholder-capital-preservation-score
-version: 0.1.0
+version: 0.1.1
 
 test_cases:
   - name: produces_weighted_score_from_complete_data
@@ -10,11 +10,81 @@ test_cases:
       interest coverage 20x, modest buybacks, no major dilution, valuation 13x normalized FCF,
       low cyclicality, clean audit history.
     expected_behavior:
-      - Produces a final 0-to-10 Shareholder Capital Preservation Score.
+      - Produces a final 0-to-10 Shareholder Capital Preservation Score displayed as `<score>/10`.
       - Includes the weighted scoring dimensions from SKILL.md.
       - Explains major positive and negative score drivers.
       - States assumptions and missing information.
       - Does not provide a buy, sell, hold, short, or trade recommendation.
+      - Does not report the official score on a 0-to-100 scale or as a percentage.
+
+  - name: enforces_zero_to_ten_scale_in_weighted_calculation
+    input: |
+      Calculate the Shareholder Capital Preservation Score using a dimension
+      score of 8 out of 10 for every category and the default weights.
+    expected_behavior:
+      - Produces an initial and final score of 8.0 out of 10.
+      - Displays the score as `8.0/10`.
+      - Does not produce 80, 80 out of 100, 800, or 8.0 out of 100.
+      - Uses decimal weights whose sum is 1.00.
+      - Keeps every dimension score and weighted contribution on the 0-to-10 scale.
+
+  - name: calculates_exact_shareholder_weighted_score
+    input: |
+      Calculate the Shareholder Capital Preservation Score using these dimension scores:
+      Balance sheet strength and liquidity: 8
+      Cash-flow durability and earnings quality: 7
+      Business stability and competitive resilience: 9
+      Capital allocation discipline and shareholder treatment: 6
+      Valuation downside risk and margin of safety: 5
+      Governance, accounting quality, and tail-risk controls: 8
+      Do not apply an overlay or cap.
+    expected_behavior:
+      - Calculates the initial score as 7.20.
+      - Displays the final score as `7.2/10`.
+      - Calculates weighted contributions using decimal weights.
+      - Weighted contributions reconcile to 7.20.
+      - Does not report 72, 72 out of 100, or 7.2 percent.
+
+  - name: weighted_contributions_reconcile_to_final_score
+    input: |
+      Produce a full Shareholder Capital Preservation Score scorecard using the
+      default rubric and show the arithmetic.
+    expected_behavior:
+      - Calculates each weighted contribution as dimension score multiplied by decimal weight.
+      - Labels dimension scores as `/10`.
+      - Labels weighted contributions as points on the final 0-to-10 scale.
+      - Weighted contributions sum to the initial score, subject only to rounding.
+      - Shows any red-flag cap separately from the initial weighted score.
+      - Keeps the initial and final scores between 0.0 and 10.0.
+
+  - name: does_not_switch_to_zero_to_one_hundred_scale
+    input: |
+      Give me the Shareholder Capital Preservation Score as a percentage out of 100.
+    expected_behavior:
+      - Retains the canonical score on a 0-to-10 scale.
+      - Reports the official score using the format `<score>/10`.
+      - Does not redefine the official score as a percentage or a 0-to-100 score.
+      - Does not use a 0-to-100 value in score bands, caps, peer comparisons, or JSON.
+
+  - name: keeps_uncertain_score_ranges_within_zero_to_ten
+    input: |
+      The available data is incomplete. Provide a low-confidence Shareholder
+      Capital Preservation Score range.
+    expected_behavior:
+      - Expresses both range bounds on the 0-to-10 scale.
+      - Does not produce a range whose lower bound is below 0.0 or upper bound is above 10.0.
+      - Uses a format such as `4.0-5.5/10`.
+      - Does not express the official range as a percentage or on a 0-to-100 scale.
+
+  - name: emits_unambiguous_json_scale_metadata
+    input: |
+      Return the Shareholder Capital Preservation Score as JSON.
+    expected_behavior:
+      - Includes numeric `score`, `scale_min`, and `scale_max` fields.
+      - Uses `scale_min: 0.0` and `scale_max: 10.0`.
+      - Includes a `display_score` formatted as `<score>/10`.
+      - Uses decimal dimension weights between 0 and 1.
+      - Keeps each dimension score and the final score between 0.0 and 10.0.
 
   - name: handles_missing_data_without_inventing_facts
     input: |
@@ -33,6 +103,8 @@ test_cases:
       - Identifies severe capital-preservation red flags.
       - Applies a low score or red-flag cap consistent with the SKILL.md process.
       - Explains liquidity, refinancing, dilution, and going-concern risks.
+      - Shows the initial weighted score separately from the capped final score.
+      - Keeps all scores and caps within 0.0 to 10.0.
       - Does not overstate potential upside.
 
   - name: distinguishes_capital_preservation_from_high_returns
@@ -58,6 +130,6 @@ test_cases:
       Compare Companies A, B, and C for shareholder capital preservation using the supplied table.
     expected_behavior:
       - Uses the same rubric and weighting for each company.
-      - Produces comparable scores and explains differences.
+      - Produces comparable scores on the 0-to-10 scale and explains differences.
       - Notes missing or non-comparable data.
       - Avoids unsupported claims beyond the supplied table.
