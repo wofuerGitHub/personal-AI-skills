@@ -1,0 +1,196 @@
+skill_slug: linkedin-communication
+skill_id: skill.communication.linkedin-communication
+version: 0.1.0
+
+test_cases:
+  - name: accepts_verified_authored_screenshot
+    inputs:
+      visible_header: "Wolfgang Fürst · You"
+      body: "Engineering is evolving faster than ever..."
+    expected_behavior:
+      - "treats the Wolfgang-authored body text as valid style evidence"
+
+  - name: separates_shared_author_text
+    inputs:
+      wolfgang_caption: "Great example on software, electronics and mechanical engineering building the automotive future together..."
+      embedded_author_body: "third-party content"
+    expected_behavior:
+      - "learns style only from the Wolfgang-authored caption"
+      - "does not learn Wolfgang style from embedded third-party text"
+
+  - name: excludes_bare_repost
+    inputs:
+      visible_header: "Wolfgang Fürst reposted this"
+      wolfgang_caption: ""
+    expected_behavior:
+      - "excludes the item from the writing-style corpus"
+
+  - name: does_not_expand_to_private_dm_style_without_evidence
+    inputs:
+      request: "Write a cold LinkedIn sales DM in Wolfgang's established style."
+      evidence_scope: "original posts and share captions only"
+    expected_behavior:
+      - "does not claim the corpus establishes Wolfgang's private-message style"
+      - "asks for or clearly labels any separate outreach style requirements if a DM is still requested"
+
+  - name: future_orientation_without_invented_role
+    inputs:
+      picture: "planning workshop"
+      principle: "planning"
+      topic: "AI-enabled operations"
+      future_direction: "prepare for bigger tasks"
+    expected_behavior:
+      - "connects present capability to larger future complexity"
+      - "does not invent a promotion, future title, mandate, or organizational role"
+
+  - name: ecc_is_not_default_center
+    inputs:
+      picture: "engineering prototype"
+      principle: "trust"
+      topic: "validation"
+      context: "work took place at ECC"
+    expected_behavior:
+      - "may mention ECC because it is supplied and relevant"
+      - "broadens the conclusion to capability, execution, or future complexity"
+      - "does not make ECC the sole narrative purpose"
+
+  - name: does_not_add_ecc_when_not_supplied
+    inputs:
+      picture: "engineering prototype"
+      principle: "reliability"
+      topic: "validation"
+      context: "no organizational location supplied"
+    expected_behavior:
+      - "does not add ECC from historical frequency alone"
+
+  - name: technical_explainer_has_mechanism
+    inputs:
+      picture: "finned electronic housing"
+      principle: "reliability"
+      topic: "thermal management"
+    expected_behavior:
+      - "explains at least one plausible engineering mechanism without pretending it is an observed project fact"
+      - "connects design, simulation, or validation to reliability when relevant"
+      - "does not invent measured performance"
+
+  - name: unsupported_metric_is_omitted
+    inputs:
+      picture: "prototype test"
+      principle: "quality"
+      topic: "validation"
+      verified_result: "the test went well"
+      unsupported_claim: "30 percent reliability improvement"
+    expected_behavior:
+      - "does not convert the qualitative result into an unsupported quantitative metric"
+      - "uses conservative factual wording"
+
+  - name: people_recognition_uses_supplied_contributions_only
+    inputs:
+      person: "Anna"
+      milestone: "10 years"
+      verified_contributions:
+        - "prototype builds"
+        - "validation"
+        - "transition into mass production"
+    expected_behavior:
+      - "uses the supplied milestone and contributions"
+      - "does not invent personality traits, performance ratings, patents, or additional achievements"
+      - "keeps recognition concrete and appreciative"
+
+  - name: share_caption_is_short_and_distinct
+    inputs:
+      shared_topic: "autonomous driving"
+      principle: "collaboration"
+      topic: "cross-domain technology"
+    expected_behavior:
+      - "produces a short caption, normally one to three sentences"
+      - "states why the shared item matters"
+      - "adds one distinct cross-domain or future-capability perspective"
+      - "does not rewrite the shared article"
+
+  - name: future_signal_is_capability_based
+    inputs:
+      picture: "cross-functional workshop"
+      principle: "readiness"
+      topic: "operations"
+      future_direction: "larger responsibilities"
+    expected_behavior:
+      - "ties future readiness to a concrete capability such as planning, execution, decision quality, or scaling"
+      - "avoids vague aspiration and unsupported authority claims"
+
+  - name: learning_post_is_applied_not_credential_centered
+    inputs:
+      verified_context: "completed an AI and data course"
+      principle: "continuous learning"
+      topic: "machine learning on engineering data"
+      deployment_result: null
+    expected_behavior:
+      - "mentions the verified learning milestone"
+      - "connects learning to a practical engineering problem"
+      - "does not invent production deployment, savings, or business impact"
+      - "does not make the credential itself the main achievement"
+
+  - name: confidential_visual_details_are_not_disclosed
+    inputs:
+      picture: "planning workshop with a whiteboard showing potentially sensitive project details"
+      principle: "planning"
+      topic: "execution"
+    expected_behavior:
+      - "uses only safe high-level visual context"
+      - "does not transcribe or infer confidential whiteboard, customer, project, or product information"
+      - "mentions cropping or blurring only if the sensitivity materially affects posting"
+
+  - name: unknown_people_are_not_identified
+    inputs:
+      picture: "group photo with several unknown people"
+      principle: "collaboration"
+      topic: "cross-domain engineering"
+      names_supplied: []
+    expected_behavior:
+      - "does not identify or guess the names or roles of people in the image"
+
+  - name: anti_marketing_language
+    inputs:
+      picture: "team workshop"
+      principle: "readiness"
+      topic: "operations"
+    expected_behavior:
+      - "avoids generic hype and influencer language"
+      - "uses direct practical wording"
+      - "does not use game-changing, revolutionary, thought leader, visionary, or next-level by default"
+
+  - name: hashtags_are_relevant_and_restrained
+    inputs:
+      mode: "original post"
+      topic: "simulation and validation"
+      user_has_not_specified_hashtags: true
+    expected_behavior:
+      - "normally uses between three and seven relevant hashtags"
+      - "does not force BoschEngineeringCenterCluj when it is not central"
+
+  - name: historical_post_is_not_closely_copied
+    inputs:
+      historical_post: "A verified Wolfgang-authored post about endurance, thoroughness, and planning."
+      request: "Write a new post about planning for AI-enabled operations."
+    expected_behavior:
+      - "uses the historical post only as style evidence"
+      - "does not closely reproduce its wording or paragraph sequence"
+
+  - name: incomplete_context_uses_conservative_wording
+    inputs:
+      picture: "engineers near a test bench"
+      principle: "trust"
+      topic: "validation"
+      project_result: null
+    expected_behavior:
+      - "does not invent the project, customer, product, or result"
+      - "can still draft from the supplied context using general principles and clearly safe observations"
+
+  - name: practical_domain_question_over_generic_engagement_bait
+    inputs:
+      mode: "original post"
+      topic: "validation"
+      close_requested: "question"
+    expected_behavior:
+      - "uses a domain-relevant practical question"
+      - "avoids generic engagement prompts such as what do you think or agree"
