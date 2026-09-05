@@ -3,10 +3,10 @@
 ## Metadata
 
 - ID: `skill.software-engineering.skill-writing`
-- Version: `0.1.5`
+- Version: `0.1.6`
 - Status: `draft`
 - Owner: `Wolfgang Fuerst`
-- Last updated: `2026-05-03`
+- Last updated: `2026-09-05`
 
 ## Purpose
 
@@ -92,7 +92,7 @@ Focus on practical usefulness: scope, instructions, examples, edge cases, safety
 ### Skill Writing Process
 
 
-0. Before drafting `SKILL.md`, load and use `repo-config/skill-template.md` as the required base template.
+0. Before drafting `SKILL.md`, load and use `repo-config/skill-template.md` as the required structural baseline.
 1. Identify the skill's core purpose from the user's prompt.
 2. Derive a concise skill name, stable skill ID, version, status, owner, and last-updated date.
 3. Define the intended user value and the concrete tasks the skill supports.
@@ -112,7 +112,11 @@ Focus on practical usefulness: scope, instructions, examples, edge cases, safety
 
 When generating a complete skill package, use this default structure unless the user asks otherwise.
 
-`SKILL.md` must always be created by filling `repo-config/skill-template.md` (do not create ad-hoc SKILL.md structures):
+`SKILL.md` must always use `repo-config/skill-template.md` as its structural baseline.
+Preserve the required structural spine and relative ordering of its core sections.
+Domain-specific sections and subsections may be added when they materially improve
+the skill; do not create ad-hoc structures that omit or reorder the required core
+sections.
 
 ```text
 <skill-name>/
@@ -130,9 +134,39 @@ Delivery is capability-aware:
 
 #### `SKILL.md`
 
-Use the sections and ordering from `repo-config/skill-template.md` exactly, then fill each section with skill-specific content.
+Preserve the required structural spine from `repo-config/skill-template.md` in
+this relative order:
 
-The `SKILL.md` file is the authoritative behavioral specification and must remain template-aligned.
+1. `# Skill: <Skill Name>`
+2. `## Metadata`
+3. `## Purpose`
+4. `## Use Cases`
+5. `## Not For`
+6. `## Inputs`
+7. `## Output`
+8. `## Instructions`
+9. `## Default Output Format`
+
+The template defines the required structural baseline, not every domain-specific
+heading.
+
+Domain-specific extensions are allowed when they improve clarity or make behavior
+more explicit:
+
+- Additional sections may be inserted between required core sections as long as
+  the required sections remain present and retain their relative ordering.
+- Nested headings under `## Instructions` may use domain-specific names. For
+  example, `### Review Process` may replace the generic `### Process`.
+- `### Role` and `### Objective` should remain explicit unless an equivalent
+  structure makes those responsibilities equally clear.
+- Constraints must remain explicit, but they may be represented by `## Not For`,
+  a `### Constraints` subsection, or equivalent domain-specific guidance.
+- Domain-specific sections such as `## Severity Levels` are valid extensions and
+  do not make a skill non-template-aligned.
+
+The `SKILL.md` file is the authoritative behavioral specification. It is
+template-aligned when the required structural spine is present in the correct
+relative order and the template's required behavioral concepts remain explicit.
 
 #### `README.md`
 

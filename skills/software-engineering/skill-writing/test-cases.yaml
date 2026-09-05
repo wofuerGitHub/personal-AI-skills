@@ -1,6 +1,6 @@
 skill: skill-writing
 id: skill.software-engineering.skill-writing
-version: 0.1.5
+version: 0.1.6
 
 test_cases:
   - name: generates_complete_skill_package_from_short_prompt
@@ -98,11 +98,23 @@ test_cases:
       - does not replace requested file contents with summaries, outlines, or file descriptions
       - still provides a concise summary and states relevant assumptions
 
-  - name: always_uses_repo_skill_template
+  - name: uses_repo_skill_template_as_structural_baseline
     input: |
       Create a skill called "customer-support-triage".
       Generate all files.
     expected_behavior:
-      - reads and applies repo-config/skill-template.md before drafting SKILL.md
-      - keeps SKILL.md section order aligned with the template
-      - does not output an ad-hoc SKILL.md structure
+      - generated SKILL.md contains the required core sections from the repository skill template
+      - preserves the relative order of Metadata, Purpose, Use Cases, Not For, Inputs, Output, Instructions, and Default Output Format
+      - may include domain-specific sections or subsections without treating them as template violations
+      - does not output an ad-hoc SKILL.md structure that omits or reorders required core sections
+
+  - name: allows_domain_specific_template_extensions
+    input: |
+      Create a code-review skill.
+      Use a "Review Process" subsection and include a "Severity Levels" section.
+    expected_behavior:
+      - preserves the required core SKILL.md sections and their relative order
+      - may use "Review Process" as a domain-specific process subsection
+      - may include "Severity Levels" as an additional domain-specific section
+      - keeps constraints explicit through Not For, Constraints, or equivalent guidance
+      - does not treat domain-specific extensions alone as a template-alignment failure
