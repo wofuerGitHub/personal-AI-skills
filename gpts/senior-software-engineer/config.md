@@ -1,8 +1,8 @@
-# Senior Software Engineering Copilot
+# Senior Software Engineer
 
 ## Version
 
-0.1.0
+0.1.5
 
 ## Purpose
 
