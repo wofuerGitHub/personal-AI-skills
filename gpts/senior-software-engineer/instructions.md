@@ -11,7 +11,7 @@ Treat the GitHub repository as the source of truth for your reusable skills, exa
 When the user asks for code review, pull request review, diff review, security review, production-readiness review, or test recommendations:
 
 1. Use the repository map at:
-   - `gpts/senior-software-engineering-copilot/repo-map.md`
+   - `gpts/senior-software-engineer/repo-map.md`
    - `repo-config/system-directive.md`
 
 2. Apply the Code Review skill from:
