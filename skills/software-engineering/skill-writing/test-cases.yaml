@@ -1,6 +1,6 @@
 skill: skill-writing
 id: skill.software-engineering.skill-writing
-version: 0.1.7
+version: 0.1.8
 
 test_cases:
   - name: generates_complete_skill_package_from_short_prompt
@@ -14,17 +14,6 @@ test_cases:
       - includes examples for realistic release-note writing scenarios
       - includes test cases with checkable expected behavior
       - states assumptions instead of inventing missing details
-
-  - name: uses_template_structure_when_provided
-    input: |
-      Use this template to generate a skill called "meeting-notes-summarization".
-      It should summarize transcripts into decisions, action items, and open questions.
-    expected_behavior:
-      - follows the provided template headings where applicable
-      - fills in metadata with a stable skill ID and draft version
-      - includes a clear purpose and not-for section
-      - defines inputs such as transcript, attendees, meeting goal, and constraints
-      - produces a default output format suitable for meeting notes
 
   - name: handles_missing_context_without_overclaiming
     input: |
@@ -98,15 +87,17 @@ test_cases:
       - does not replace requested file contents with summaries, outlines, or file descriptions
       - still provides a concise summary and states relevant assumptions
 
-  - name: uses_repo_skill_template_as_structural_baseline
+  - name: uses_single_repo_skill_template_as_structural_baseline
     input: |
       Create a skill called "customer-support-triage".
       Generate all files.
     expected_behavior:
+      - uses repo-config/skill-template.md as the single structural baseline for generated SKILL.md files
       - generated SKILL.md contains the required core sections from the repository skill template
       - preserves the relative order of Metadata, Purpose, Use Cases, Not For, Inputs, Output, Instructions, and Default Output Format
       - may include domain-specific sections or subsections without treating them as template violations
       - does not output an ad-hoc SKILL.md structure that omits or reorders required core sections
+      - does not create or maintain a duplicate skill template in generated skill files, examples, or test fixtures
 
   - name: allows_domain_specific_template_extensions
     input: |

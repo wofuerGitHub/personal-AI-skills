@@ -3,7 +3,7 @@
 ## Metadata
 
 - ID: `skill.software-engineering.skill-writing`
-- Version: `0.1.7`
+- Version: `0.1.8`
 - Status: `draft`
 - Owner: `Wolfgang Fuerst`
 - Last updated: `2026-09-05`
@@ -92,7 +92,7 @@ Focus on practical usefulness: scope, instructions, examples, edge cases, safety
 ### Skill Writing Process
 
 
-0. Before drafting `SKILL.md`, load and use `repo-config/skill-template.md` as the required structural baseline.
+0. Before drafting `SKILL.md`, load and use `repo-config/skill-template.md` as the required structural baseline and single source of truth for the repository's skill structure. Do not maintain or embed duplicate copies of the skill template in skill definitions, examples, or test fixtures.
 1. Identify the skill's core purpose from the user's prompt.
 2. Derive a concise skill name, stable skill ID, version, status, owner, and last-updated date. Use placeholders rather than inventing an owner when none is supplied.
 3. Define the intended user value and the concrete tasks the skill supports.
