@@ -1,4 +1,7 @@
 # Code Review Examples
+
+These examples show the review pattern and intentionally omit some optional headings for brevity. When an example is meant to represent the default full output, include the full default format described in `SKILL.md`.
+
 ## Example 1: Python function review
 ### User
 
@@ -50,6 +53,16 @@ def average(values: Sequence[float]) -> float:
 
     return sum(values) / len(values)
 ```
+
+## Test Recommendations
+
+- Add a test for empty input.
+- Add a test for a numeric list with a non-zero average.
+- Add a test for invalid non-numeric values if the function is expected to reject them explicitly.
+
+## Assumptions
+
+- Empty input is not considered a valid input for this function unless the domain explicitly says otherwise.
 
 ## Example 2: Security-focused review
 
@@ -110,6 +123,16 @@ def get_user(user_id: int, current_user: User = Depends(require_user)):
     return user
 ```
 
+## Test Recommendations
+
+- Add an authorization test for a different user.
+- Add a test for an admin override.
+- Add a test for a missing user returning a 404.
+
+## Assumptions
+
+- Authentication and authorization are enforced by middleware or dependency injection in the surrounding application.
+
 ## Example 3: Async performance review
 
 ### User
@@ -166,6 +189,16 @@ async function loadUsers(ids) {
   return Promise.all(ids.map((id) => fetchUser(id)));
 }
 ```
+
+## Test Recommendations
+
+- Measure latency with a large batch of IDs.
+- Add a regression test confirming the function preserves input order when required.
+- Add a test for rate limit or partial failure handling if the API can fail per request.
+
+## Assumptions
+
+- The requests are independent and the calling code can tolerate concurrent fetches without added side effects.
 
 ## Example 4: SQL Injection Review
 
