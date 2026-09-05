@@ -3,7 +3,7 @@
 ## Metadata
 
 - ID: `skill.software-engineering.skill-writing`
-- Version: `0.1.0`
+- Version: `0.1.5`
 - Status: `draft`
 - Owner: `Wolfgang Fuerst`
 - Last updated: `2026-05-03`
