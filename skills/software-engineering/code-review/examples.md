@@ -651,7 +651,7 @@ result = service.run(data)
 
 ## Review Summary
 
-There is not enough context to perform a meaningful code review. The line is syntactically simple, but correctness depends entirely on what `service`, `run`, and `data` represent.
+There is not enough context to perform a meaningful code review. The line is syntactically straightforward, but its correctness, safety, performance, and expected failure behavior depend on what `service`, `run`, and `data` represent.
 
 ## Merge Recommendation
 
@@ -661,50 +661,67 @@ Not enough context
 
 ### Critical
 
-- None found from the visible snippet.
+* None found from the visible snippet.
 
 ### High
 
-- Not enough context to assess correctness, safety, performance, or maintainability.
+* None confirmed from the visible snippet.
 
 ### Medium
 
-- Error handling is not visible.
-- Input validation is not visible.
-- The meaning and expected type of `result` are not visible.
+* Error handling cannot be evaluated.
+* Input validation cannot be evaluated.
+* The expected type and meaning of `result` are unknown.
+* It is unclear whether `service.run` performs I/O, mutates state, or has other side effects.
 
 ### Low
 
-- The line is readable in isolation.
+* The line is readable in isolation.
 
 ### Questions
 
-- What does `service.run` do?
-- Can `service.run` fail?
-- What type and shape should `data` have?
-- What should happen if `result` is empty or invalid?
-- Is this call synchronous, remote, expensive, or state-changing?
+* What does `service.run` do?
+* What type and shape should `data` have?
+* What does `service.run` return?
+* What failures or exceptions can the call produce?
+* Is the operation synchronous, remote, expensive, or state-changing?
+* What should happen if the returned result is empty or invalid?
 
 ## Suggested Changes
 
-Provide more surrounding code, especially:
+Provide the surrounding context needed to review the behavior confidently, especially:
 
-- The definition of `service.run`
-- The type or example value of `data`
-- The expected behavior
-- Error handling requirements
-- Tests or failure cases
+* The definition or interface of `service.run`
+* The type or representative value of `data`
+* The expected return value
+* Relevant error-handling requirements
+* Any side effects or external dependencies
+* Existing tests or known failure cases
+
+No code change is justified from this single line alone.
 
 ## Test Recommendations
 
-Unable to recommend specific tests without more context. At minimum, test successful execution, invalid input, and failure behavior once the function behavior is known.
+Specific tests depend on the contract of `service.run`. Once that behavior is known, consider covering:
+
+* Successful execution with valid input
+* Invalid or malformed input
+* Expected exceptions or failure responses
+* Empty, missing, or unexpected return values
+* External dependency failures, if applicable
+* Side effects or state changes, if applicable
 
 ## Assumptions
 
-- No reliable assumptions can be made from this one line alone.
+* No reliable assumptions are made about the implementation of `service.run`.
+* No runtime, framework, type, or failure semantics were provided.
+* The review is limited to the single visible line.
 
-Review this Python function:
+## Example 12: Review a Small Python Function
 
+### User
+
+```python
 def normalize_email(email: str) -> str:
     email = email.strip().lower()
 
@@ -712,10 +729,13 @@ def normalize_email(email: str) -> str:
         raise ValueError("Invalid email address")
 
     return email
+```
 
 ## Review Summary
 
-The function is clear, small, and easy to test. It handles basic normalization and rejects obviously invalid input.
+The function is small, readable, and easy to test. Its normalization behavior is clear, but the validation is very permissive: it only checks whether the input contains an `@` character.
+
+Whether that is acceptable depends on whether the function is intended to perform basic normalization or actual email-address validation.
 
 ## Merge Recommendation
 
@@ -725,40 +745,66 @@ Approve with comments
 
 ### Critical
 
-- None found.
+* None found.
 
 ### High
 
-- None found.
+* None found.
 
 ### Medium
 
-- The validation is intentionally minimal. It accepts some invalid email-like strings, such as `"@"` or `"user@"`.
+* The validation accepts clearly invalid values such as `"@"`, `"user@"`, and `"@example.com"`.
+* Lowercasing the entire address changes the local part as well as the domain. That may be acceptable for the application, but it should be an intentional normalization policy rather than an implicit assumption.
 
 ### Low
 
-- Consider renaming the error message to clarify that this is basic validation only.
-- Consider documenting whether full RFC-compliant email validation is intentionally out of scope.
+* The function name may imply stronger email handling than it actually provides if callers interpret normalization as including meaningful validation.
+* Consider documenting that only basic structural validation is performed if full validation is intentionally out of scope.
 
 ### Questions
 
-- Is basic validation sufficient for this use case?
-- Should internationalized emails be supported?
-- Should this preserve case in the local part of the email address?
+* Is this function intended only to normalize input, or also to validate email addresses?
+* Is basic structural validation sufficient for this application?
+* Should the local part always be lowercased?
+* Does the application need to support internationalized email addresses?
 
 ## Suggested Changes
 
-If basic validation is enough, the current implementation is acceptable.
-
-If slightly stricter validation is desired:
+If intentionally minimal validation is sufficient, make the basic structural requirement explicit:
 
 ```python
 def normalize_email(email: str) -> str:
     email = email.strip().lower()
 
     local_part, separator, domain = email.partition("@")
+
     if not separator or not local_part or not domain:
         raise ValueError("Invalid email address")
 
     return email
 ```
+
+This remains intentionally lightweight while rejecting obvious invalid values such as `"@"`, `"user@"`, and `"@example.com"`.
+
+Avoid introducing a complex RFC-compliant regular expression unless the application actually requires that level of validation.
+
+## Test Recommendations
+
+Add tests covering:
+
+* Leading and trailing whitespace
+* Uppercase input
+* A normal address such as `"User@Example.com"`
+* Missing `@`
+* Empty input
+* `"@"`
+* `"user@"`
+* `"@example.com"`
+* Multiple `@` characters, with expected behavior explicitly defined
+* Whether lowercasing the local part is intentional
+
+## Assumptions
+
+* The function is intended for lightweight application-level normalization rather than complete RFC-compliant validation.
+* Raising `ValueError` is appropriate for invalid input in the surrounding API.
+* No application-specific email-address rules were provided.
