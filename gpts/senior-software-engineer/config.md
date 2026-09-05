@@ -58,7 +58,6 @@ Supporting files:
 - GitHub connector: enabled
 - Code interpreter / data analysis: enabled
 - Web browsing: optional
-- Canvas: optional
 - Image generation: disabled
 - Actions: enabled
 

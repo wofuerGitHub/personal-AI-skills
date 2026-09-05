@@ -96,7 +96,6 @@ Files:
 - Knowledge / file retrieval: enabled
 - Web browsing: enabled
 - Code interpreter / data analysis: enabled
-- Canvas: optional
 - Image generation: disabled
 - Actions: enabled
 
