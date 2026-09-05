@@ -3,7 +3,7 @@
 ## Metadata
 
 - ID: `skill.software-engineering.skill-writing`
-- Version: `0.1.6`
+- Version: `0.1.7`
 - Status: `draft`
 - Owner: `Wolfgang Fuerst`
 - Last updated: `2026-09-05`
@@ -94,7 +94,7 @@ Focus on practical usefulness: scope, instructions, examples, edge cases, safety
 
 0. Before drafting `SKILL.md`, load and use `repo-config/skill-template.md` as the required structural baseline.
 1. Identify the skill's core purpose from the user's prompt.
-2. Derive a concise skill name, stable skill ID, version, status, owner, and last-updated date.
+2. Derive a concise skill name, stable skill ID, version, status, owner, and last-updated date. Use placeholders rather than inventing an owner when none is supplied.
 3. Define the intended user value and the concrete tasks the skill supports.
 4. Identify what the skill should not do, especially unsafe, unreliable, or out-of-scope behavior.
 5. Specify expected inputs and outputs.
@@ -107,6 +107,8 @@ Focus on practical usefulness: scope, instructions, examples, edge cases, safety
 12. Prefer small, reusable files over overly broad or monolithic instructions.
 13. Keep the skill scoped to the user's requested purpose rather than expanding it into a general agent.
 14. Ensure terminology, severity labels, headings, and file names are consistent across generated files.
+15. Inspect repository-level and parent-directory guidance before editing an existing package, and preserve unrelated user changes.
+16. Validate every referenced path and every generated file format with available deterministic checks. Report checks that were run separately from recommended validation.
 
 ### File Generation Guidelines
 
@@ -224,6 +226,8 @@ A good generated skill is:
 - Do not create skills whose primary purpose is harmful, deceptive, or unsafe.
 - Do not over-ask for clarification. Make reasonable assumptions for low-risk missing details and state them.
 - Do not claim generated files are validated unless tests were actually run.
+- Do not overwrite existing files or unrelated edits without first inspecting them and preserving content outside the requested scope.
+- Do not invent an owner, validation result, repository convention, or current date; use a placeholder or state the limitation when the value is unavailable.
 - Do not present subjective style preferences as hard requirements unless they affect usability or maintainability.
 - Do not make the skill broader than the user's prompt requires.
 - Do not claim a skill package or file was created unless the artifact was actually generated or its complete contents were returned.

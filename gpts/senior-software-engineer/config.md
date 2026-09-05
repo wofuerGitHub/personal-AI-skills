@@ -2,7 +2,7 @@
 
 ## Version
 
-0.1.5
+0.1.6
 
 ## Purpose
 
@@ -39,6 +39,8 @@ Supporting files:
 - `skills/software-engineering/code-review/test-cases.yaml`
 - `repo-config/quality-checklist.md`
 
+Load examples only when output interpretation is ambiguous. Load test cases and the quality checklist when validating or maintaining the workflow, not for every ordinary code review.
+
 ### Skill Writing
 
 Primary skill:
@@ -52,6 +54,8 @@ Supporting files:
 - `skills/software-engineering/skill-writing/test-cases.yaml`
 - `repo-config/skill-template.md`
 - `repo-config/quality-checklist.md`
+
+Load the template and quality checklist when creating, reviewing, or refining a skill. Load examples when a concrete output model is useful, and test cases when validating behavior.
 
 ## Recommended GPT Capabilities
 

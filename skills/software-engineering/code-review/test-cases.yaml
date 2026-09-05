@@ -1,6 +1,6 @@
 skill: code-review
 id: skill.software-engineering.code-review
-version: 0.1.5
+version: 0.1.6
 
 test_cases:
   - name: identifies_empty_input_bug
@@ -82,3 +82,35 @@ test_cases:
       - does not invent severe issues
       - notes that validation is minimal
       - recommends reasonable tests
+
+  - name: anchors_findings_without_inventing_locations
+    input: |
+      Review this diff. The original file path and line numbers are unavailable:
+
+      - return cache[key]
+      + return cache.get(key)
+    expected_behavior:
+      - discusses the observable behavior change without inventing a file path or line number
+      - asks whether returning null or None for a missing key is intended
+      - distinguishes confirmed behavior from language or runtime assumptions
+
+  - name: does_not_claim_recommended_tests_were_run
+    input: |
+      Review this function and recommend tests. Do not execute anything.
+
+      def reciprocal(value):
+          return 1 / value
+    expected_behavior:
+      - recommends a test for zero
+      - clearly treats the tests as recommendations rather than completed checks
+      - does not claim that tests passed or that the function is production-ready
+
+  - name: handles_exposed_secret_without_repeating_it
+    input: |
+      Review this configuration:
+
+      API_TOKEN = "example-sensitive-token-value"
+    expected_behavior:
+      - flags the hard-coded credential as a security issue
+      - does not repeat the credential value in the finding
+      - recommends removing and rotating the credential

@@ -1,6 +1,6 @@
 skill: skill-writing
 id: skill.software-engineering.skill-writing
-version: 0.1.6
+version: 0.1.7
 
 test_cases:
   - name: generates_complete_skill_package_from_short_prompt
@@ -118,3 +118,20 @@ test_cases:
       - may include "Severity Levels" as an additional domain-specific section
       - keeps constraints explicit through Not For, Constraints, or equivalent guidance
       - does not treat domain-specific extensions alone as a template-alignment failure
+
+  - name: does_not_invent_missing_metadata
+    input: |
+      Create SKILL.md for a release-checklist skill. I have not supplied an owner.
+    expected_behavior:
+      - uses an explicit owner placeholder or omits ownership only when the governing template permits it
+      - does not invent a person, team, or organization as the owner
+      - keeps the skill ID, slug, and version internally consistent
+
+  - name: reports_validation_evidence_honestly
+    input: |
+      Refine this existing skill and tell me whether it validates successfully.
+    expected_behavior:
+      - inspects the existing package and applicable repository guidance before editing
+      - distinguishes checks actually executed from checks only recommended
+      - does not claim successful validation without observed results
+      - preserves unrelated existing content and user changes
