@@ -1,5 +1,9 @@
 # Skill Writing Examples
 
+For brevity, examples may show only the summary portion of a response after file delivery.
+Whenever a user asks to generate one or more files, the listed files must also be delivered as actual generated artifacts when supported or as complete copyable file contents when artifact creation is unavailable.
+A `Generated Files` list by itself is not a successful response to a file-generation request.
+
 ## Example 1: Generate a complete skill from a short prompt
 
 ### User
@@ -13,7 +17,7 @@ The skill writes concise release notes from merged PRs and issue summaries.
 
 ## Summary
 
-Generated a complete draft skill package for `release-notes-writing`.
+Generated and delivered a complete draft skill package for `release-notes-writing`.
 
 ## Generated Files
 
@@ -46,7 +50,7 @@ It should include impact, timeline, root cause if known, remediation, and open f
 
 ## Summary
 
-Generated a complete draft skill package for `incident-summary-writing` with explicit constraints against blame, speculation, and unsupported root-cause claims.
+Generated and delivered a complete draft skill package for `incident-summary-writing` with explicit constraints against blame, speculation, and unsupported root-cause claims.
 
 ## Generated Files
 
@@ -189,7 +193,7 @@ Create test-cases.yaml for a skill that summarizes legal contracts.
 
 ## Summary
 
-Generated draft test cases for a contract-summary skill.
+Generated and delivered draft test cases for a contract-summary skill.
 
 ## Generated Files
 
@@ -217,7 +221,7 @@ The skill reviews code like a pragmatic senior engineer.
 
 ## Summary
 
-Generated a complete draft skill package for `code-review` using the provided template.
+Generated and delivered a complete draft skill package for `code-review` using the provided template.
 
 ## Generated Files
 

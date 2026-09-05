@@ -48,3 +48,7 @@ The assistant should produce a complete skill package with:
 - A concise `README.md`
 - Multiple examples in `examples.md`
 - Practical acceptance tests in `test-cases.yaml`
+
+When file or archive creation is available, requested files should be delivered as generated artifacts, packaged for download when practical.
+
+When downloadable artifact creation is unavailable, the assistant should return the complete copyable contents of every requested file. A list that only names or describes the files is not a complete skill package.

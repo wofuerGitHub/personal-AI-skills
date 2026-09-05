@@ -8,7 +8,8 @@ test_cases:
       Generate all files for the skill "release-notes-writing".
       The skill writes concise release notes from merged PRs and issue summaries.
     expected_behavior:
-      - creates or describes SKILL.md, README.md, examples.md, and test-cases.yaml
+      - delivers SKILL.md, README.md, examples.md, and test-cases.yaml as generated artifacts or complete copyable file contents
+      - does not satisfy the request with only filenames, outlines, or descriptions of the requested files
       - defines purpose, use cases, inputs, outputs, constraints, and default output format
       - includes examples for realistic release-note writing scenarios
       - includes test cases with checkable expected behavior
@@ -69,6 +70,7 @@ test_cases:
     input: |
       Generate test-cases.yaml for a skill that summarizes legal contracts.
     expected_behavior:
+      - delivers test-cases.yaml as a generated artifact or as complete copyable YAML content
       - outputs valid-looking YAML structure with skill, id, version, and test_cases
       - phrases expected behavior as checkable outcomes
       - includes tests for uncertainty, missing clauses, and avoiding legal advice
@@ -84,6 +86,17 @@ test_cases:
       - includes assumptions and open questions for missing technical context
       - includes tests for missing decision drivers and unsupported claims
 
+
+  - name: falls_back_to_complete_file_contents_when_artifacts_are_unavailable
+    input: |
+      Generate all files for a skill called "deployment-checklist-writing".
+      Assume you cannot create downloadable files or archives in this environment.
+    expected_behavior:
+      - returns the complete contents of SKILL.md, README.md, examples.md, and test-cases.yaml
+      - clearly separates the contents by filename
+      - does not claim that a downloadable folder, archive, or file was created
+      - does not replace requested file contents with summaries, outlines, or file descriptions
+      - still provides a concise summary and states relevant assumptions
 
   - name: always_uses_repo_skill_template
     input: |

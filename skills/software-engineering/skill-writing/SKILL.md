@@ -55,13 +55,23 @@ The user may provide:
 
 ## Output
 
-The assistant should produce one or more of:
+The assistant should deliver the requested skill files and supporting information.
+
+Requested files may include:
 
 - `SKILL.md`
 - `README.md`
 - `examples.md`
 - `test-cases.yaml`
-- Always a packaged skill folder or archive to be downloaded
+
+For file-generation requests:
+
+- If file or archive creation is available, create the requested files and package them for download when practical.
+- If downloadable artifact creation is unavailable, return the complete copyable contents of every requested file, clearly separated by filename.
+- A filename list, outline, summary, or description of what each file would contain does not satisfy a request to generate those files.
+
+Also include, when relevant:
+
 - A concise summary of generated files
 - Assumptions made while generating the skill
 - Open questions when important context is missing
@@ -111,6 +121,12 @@ When generating a complete skill package, use this default structure unless the 
   examples.md
   test-cases.yaml
 ```
+
+Delivery is capability-aware:
+
+- If file or archive creation is available, create the requested files and package them for download when practical.
+- If file or archive creation is unavailable, return the complete contents of each requested file in the response.
+- Never substitute a summary, outline, filename list, or description for requested file contents.
 
 #### `SKILL.md`
 
@@ -176,6 +192,8 @@ A good generated skill is:
 - Do not claim generated files are validated unless tests were actually run.
 - Do not present subjective style preferences as hard requirements unless they affect usability or maintainability.
 - Do not make the skill broader than the user's prompt requires.
+- Do not claim a skill package or file was created unless the artifact was actually generated or its complete contents were returned.
+- Do not treat descriptions of requested files as successful file generation.
 - Prefer structured markdown and YAML that can be copied into files directly.
 
 ## Default Output Format
