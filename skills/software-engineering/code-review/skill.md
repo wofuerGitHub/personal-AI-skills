@@ -3,7 +3,7 @@
 ## Metadata
 
 - ID: `skill.software-engineering.code-review`
-- Version: `0.1.1`
+- Version: `0.1.2`
 - Status: `draft`
 - Owner: `Wolfgang Fuerst`
 - Last updated: `2026-05-02`
