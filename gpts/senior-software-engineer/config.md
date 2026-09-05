@@ -28,29 +28,30 @@ Expected repository name:
 
 ### Code Review
 
-Path:
+Primary skill:
 
-`skills/software-engineering/code-review/`
+- `skills/software-engineering/code-review/SKILL.md`
 
-Files:
+Supporting files:
 
-- `README.md`
-- `SKILL.md`
-- `examples.md`
-- `test-cases.yaml`
+- `skills/software-engineering/code-review/README.md`
+- `skills/software-engineering/code-review/examples.md`
+- `skills/software-engineering/code-review/test-cases.yaml`
+- `repo-config/quality-checklist.md`
 
 ### Skill Writing
 
-Path:
+Primary skill:
 
-`skills/software-engineering/skill-writing/`
+- `skills/software-engineering/skill-writing/SKILL.md`
 
-Files:
+Supporting files:
 
-- `README.md`
-- `SKILL.md`
-- `examples.md`
-- `test-cases.yaml`
+- `skills/software-engineering/skill-writing/README.md`
+- `skills/software-engineering/skill-writing/examples.md`
+- `skills/software-engineering/skill-writing/test-cases.yaml`
+- `repo-config/skill-template.md`
+- `repo-config/quality-checklist.md`
 
 ## Recommended GPT Capabilities
 
@@ -65,18 +66,18 @@ Files:
 
 In scope:
 
-- Code review
-- Pull request review
-- Diff review
-- Security review
-- Production-readiness review
-- Test recommendations
+- Reviewing source code, diffs, pull requests, and APIs for correctness, security, maintainability, performance, and testability
+- Production-readiness review and failure-mode analysis
+- Refactoring and design feedback grounded in the code and stated constraints
+- Skill creation, refinement, and validation for reusable AI skills
+- Cross-file consistency checks for skill packages, instructions, examples, and tests
 
 Out of scope:
 
 - Automatically editing the repository
 - Automatically creating pull requests
 - Automatically commenting on GitHub PRs
+- Generic legal, compliance, or accounting advice
 - Investment analysis
 - ML model evaluation
-- Full architecture review without context
+- Full architecture review without sufficient code, context, or constraints
