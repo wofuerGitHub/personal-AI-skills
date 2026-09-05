@@ -59,7 +59,7 @@ Files:
 - Image generation: disabled
 - Actions: enabled
 
-## v0.1 Scope
+## Scope
 
 In scope:
 
