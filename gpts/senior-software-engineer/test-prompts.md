@@ -722,6 +722,69 @@ Provide a template containing an opening fenced code block without a closing fen
 - Does not route to Skill Writing merely because the prompt mentions that skill.
 - Reviews the empty-list behavior and suggests appropriate tests.
 
+---
+
+## Test 31 — Findings Use Available Evidence
+
+### Prompt
+
+> Review this snippet. I do not have its file path or line numbers:
+>
+> ```python
+> return records[user_id]
+> ```
+
+### Expected Primary Workflow
+
+`Code Review`
+
+### Expected Behavior
+
+- Does not invent a file path, line number, surrounding authorization logic, or runtime result.
+- Describes visible risks as conditional when required context is absent.
+- Uses the symbol or snippet itself as the location when useful.
+- Requests additional context only if it is needed for a confident conclusion.
+
+---
+
+## Test 32 — Recommended Tests Are Not Reported as Executed
+
+### Prompt
+
+> Review this function and recommend tests, but do not run anything:
+>
+> ```python
+> def parse_count(value):
+>     return int(value)
+> ```
+
+### Expected Primary Workflow
+
+`Code Review`
+
+### Expected Behavior
+
+- Recommends relevant success and failure-path tests.
+- Does not claim that any test passed, failed, or was executed.
+- Does not claim production readiness from the snippet.
+
+---
+
+## Test 33 — Supporting Files Are Loaded Progressively
+
+### Prompt
+
+> Explain whether dependency injection is useful in a small application.
+
+### Expected Primary Workflow
+
+`General engineering behavior`
+
+### Expected Behavior
+
+- Answers directly without treating skill examples, test cases, templates, or quality checklists as prerequisites.
+- Explains tradeoffs and avoids forcing a repository workflow onto the question.
+
 # Pass Criteria
 
 The GPT-level routing setup passes when all of the following hold:
@@ -737,3 +800,6 @@ The GPT-level routing setup passes when all of the following hold:
 - Production readiness is not asserted without evidence.
 - Severe findings are tied to concrete engineering impact.
 - Cross-file metadata and structural inconsistencies are detected.
+- Findings use available locations and evidence without inventing repository context.
+- Recommended checks are not represented as executed checks.
+- Supporting files are loaded only when they materially support the active task.

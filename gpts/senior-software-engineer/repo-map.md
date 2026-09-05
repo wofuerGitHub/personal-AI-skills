@@ -81,6 +81,8 @@ Review source code and code-level changes for engineering quality.
 - `skills/software-engineering/code-review/test-cases.yaml`
 - `repo-config/quality-checklist.md`
 
+Load `SKILL.md` for ordinary reviews. Load examples only for output clarification, and load test cases or the quality checklist when evaluating or maintaining this workflow.
+
 ### Use When
 
 The user asks for:
@@ -125,6 +127,8 @@ Create, refine, review, and validate reusable assistant skills.
 - `skills/software-engineering/skill-writing/test-cases.yaml`
 - `repo-config/skill-template.md`
 - `repo-config/quality-checklist.md`
+
+Load the template and quality checklist for skill authoring or review. Load examples for concrete output guidance and test cases for workflow validation.
 
 ### Use When
 
@@ -275,7 +279,7 @@ What is the target artifact?
 When answering questions governed by an active skill:
 
 1. Load the applicable primary skill.
-2. Load its relevant supporting files.
+2. Load only supporting files relevant to the task; do not treat examples or test suites as runtime prerequisites.
 3. Apply repository-specific behavior over generic behavior where they differ.
 4. Do not load unrelated skills by default.
 5. Use mixed workflows only when the task genuinely crosses domains.

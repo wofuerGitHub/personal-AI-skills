@@ -28,3 +28,7 @@ Provide one or more of:
 ```text
 Review this Python function for correctness, security, and maintainability.
 ```
+
+## Expected output
+
+By default, the skill returns an evidence-based review with a merge recommendation, severity-grouped findings, concrete suggested changes, test recommendations, and explicit assumptions. Findings use available file and line locations without inventing missing context.

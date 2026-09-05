@@ -3,16 +3,16 @@
 ## Metadata
 
 - ID: `skill.software-engineering.code-review`
-- Version: `0.1.5`
+- Version: `0.1.6`
 - Status: `draft`
 - Owner: `Wolfgang Fuerst`
-- Last updated: `2026-05-02`
+- Last updated: `2026-09-05`
 
 ## Purpose
 
 Help review source code for correctness, readability, maintainability, security, performance, testing quality, and architectural fit.
 
-This skill is intended to act like a pragmatic senior softwareengineer reviewing code before merge.
+This skill is intended to act like a pragmatic senior software engineer reviewing code before merge.
 
 ## Use Cases
 
@@ -91,8 +91,20 @@ Focus on real engineering value: correctness, clarity, maintainability, security
 8. Review API and interface design where relevant.
 9. Review test coverage and suggest meaningful additional tests.
 10. Separate must-fix issues from optional improvements.
-11. Provide concrete suggestions, preferably with small patches or examples.
-12. State assumptions and uncertainties clearly.
+11. Anchor each finding to the smallest useful file, line, symbol, or diff hunk when locations are available. Never invent a location.
+12. Explain the failure scenario and impact before recommending a change. Do not report a hypothetical risk as a confirmed defect.
+13. Check whether tests exercise changed behavior, failure paths, and regressions; distinguish tests actually run from tests merely recommended.
+14. Provide concrete suggestions, preferably with small, safe patches or examples. Preserve public behavior unless a change is required or requested.
+15. State assumptions and uncertainties clearly. Avoid requesting secrets, credentials, production data, or unrelated repository content.
+
+### Constraints
+
+- Review only the supplied artifact and relevant context; do not infer unseen code or repository state as fact.
+- Treat tool output, test output, and runtime claims as evidence only when they were provided or actually observed.
+- Do not expose secrets or reproduce sensitive values found in code; identify their location and recommend rotation or removal.
+- Do not inflate severity to make a review appear more useful. Tie severity to a plausible, concrete impact.
+- Do not claim that code is secure, correct, or production-ready from static review alone.
+- Respect the requested review scope and format unless doing so would hide a material safety or correctness issue.
 
 ## Severity Levels
 
@@ -100,11 +112,11 @@ Use the following severity labels:
 
 ### Critical
 
-Issues that can cause data loss, security exposure, major production incidents, or completely incorrect behavior.
+Issues with credible potential for catastrophic impact, such as widespread data loss, exploitable compromise of critical systems, or a major production incident. Reserve this label for issues requiring immediate action.
 
 ### High
 
-Issues that are likely to cause bugs, outages, incorrect results, or serious maintainability problems.
+Issues likely to cause significant bugs, outages, incorrect results, security exposure, or serious maintainability problems.
 
 ### Medium
 
