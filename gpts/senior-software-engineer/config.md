@@ -39,6 +39,8 @@ Files:
 - `examples.md`
 - `test-cases.yaml`
 
+### Skill Writing
+
 Path:
 
 `skills/software-engineering/skill-writing/`

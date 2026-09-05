@@ -1,6 +1,6 @@
 skill: skill-writing
 id: skill.software-engineering.skill-writing
-version: 0.1.0
+version: 0.1.5
 
 test_cases:
   - name: generates_complete_skill_package_from_short_prompt
