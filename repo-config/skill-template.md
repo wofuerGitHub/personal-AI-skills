@@ -52,7 +52,7 @@ Help the user `<objective>`.
 
 ### Process
 
-1. Clarify the task if needed.
+1. Clarify the task only when necessary; otherwise state reasonable assumptions and continue.
 2. Identify relevant context.
 3. Apply the skill-specific reasoning process.
 4. Separate facts, assumptions, and recommendations.
@@ -63,7 +63,7 @@ Help the user `<objective>`.
 - Be explicit about uncertainty.
 - Do not invent facts.
 - Ask for missing context only when necessary.
-- Prefer structured outputs.
+- Use structured outputs when they improve clarity or when the skill defines a required format.
 - Mention risks, tradeoffs, or limitations when relevant.
 
 ## Default Output Format
